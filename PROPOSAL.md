@@ -17,7 +17,8 @@ Daily Vibes is a social platform designed to counter the negativity often found 
 - Clone our repo to your computer:
 git@github.com:egarza0614/daily_vibes.git
 
-- ...
+- npm install
+- npm start
 
 
 ## Animated Gifs/Pictures of App
@@ -26,22 +27,36 @@ git@github.com:egarza0614/daily_vibes.git
 
 ## Tech Stack
 
-- What languages is it written with: 
+- JavaScript
+- HTML
+- CSS
+- SQL
+- Templates:
+-- Express.js
+-- Sequelize
+-- bcryptjs
+-- express-session
+-- dotenv
+-- nodemon
 
-- What libraries are used: 
-
-- Other: 
-
+- Other:
+-- Handlebars.js
+-- Tailwind CSS
 
 ## APIs
 
--
+- Custom RESTful API
 
 ## MVP (Minimum Viable Product)
 
--
-
+- User Authentication
+- Post Creation and Display
+- Working Routes
+- Basic Interactions: Comment, Like 
+- Hashtags system to categorize content
+- Account Profile editing, password...
 
 ## Stretch Goals
 
--
+- Themed groups where users can connect with others who share similar interests
+
