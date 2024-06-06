@@ -4,14 +4,13 @@ CREATE DATABASE dailyvibes_db;
 
 -- Switch to the new database
 \c dailyvibes_db;
-
 -- Create the "users" table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(50) UNIQUE NOT NULL,  -- Shorter username for display
+    username VARCHAR(50) UNIQUE NOT NULL,  
     password TEXT NOT NULL,
-    bio TEXT,                         -- Optional user bio
-    profile_picture TEXT              -- URL for profile picture (Cloudinary)
+    bio TEXT,                         
+    profile_picture TEXT,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -21,8 +20,8 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     title VARCHAR(255) NOT NULL,
     content TEXT NOT NULL,
-    image_url TEXT,                       -- URL for post image (Cloudinary)
-    video_url TEXT,                       -- URL for post video (Cloudinary)
+    image_url TEXT,                       
+    video_url TEXT,                      
     user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
