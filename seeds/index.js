@@ -1,7 +1,6 @@
-const sequelize = require('../config/connection');
+const sequelize = require('/config/connection');
 const { User, Post, Comment } = require('../models');
 
-const seedData = require('./seedData');
 
 const seedDatabase = async () => {
   await sequelize.sync(); // Create tables
@@ -36,3 +35,5 @@ const seedDatabase = async () => {
 };
 
 seedDatabase();
+
+module.exports
