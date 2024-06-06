@@ -1,5 +1,6 @@
 -- Drop and recreate the database (for development/testing only)
 DROP DATABASE IF EXISTS dailyvibes_db;
+
 CREATE DATABASE dailyvibes_db;
 
 -- Switch to the new database
