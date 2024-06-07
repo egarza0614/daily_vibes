@@ -1,6 +1,6 @@
 
 const sequelize = require('../config/connection');
-const { Users, Post, Comment } = require('../models');
+const { Users, Post, Comments } = require('../models');
 const seedData = require('./seedData');
 
 
@@ -30,7 +30,7 @@ const seedDatabase = async () => {
     return { ...comment, user_id: randomUser.id, post_id: randomPost.id };
   });
 
-  await Comment.bulkCreate(commentsWithAssociations);
+  await Comments.bulkCreate(commentsWithAssociations);
   console.log(`Seeded ${seedData.comments.length} comments`);
 
   process.exit(0); // Exit the process after seeding
