@@ -1,8 +1,8 @@
 // user.js
 const { Model, DataTypes } = require('sequelize');
-const sequelize = require('./config/connection');
+const sequelize = require('../config/connection');
 
-class Users extends Model {}
+class Users extends Model { }
 
 Users.init(
   {
@@ -29,7 +29,7 @@ Users.init(
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [8], 
+        len: [8],
       },
     },
   },
