@@ -1,17 +1,68 @@
+const path = require('path');
 const express = require('express');
-const Filter = require('bad-words');
-const fs = require('fs');
+const session = require('express-session');
+const exphbs = require('express-handlebars');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const routes = require('./controllers/homeRoutes')
 
-const filter = new Filter();
+// const routes = require('./controllers');
+const sequelize = require('./config/connection');
 
-// Read bad words from JSON file asynchronously
-fs.readFile('./words.json', 'utf8', (err, data) => {
-  if (err) {
-    console.error('Error reading file:', err);
-    return;
-  }
-  const badWords = JSON.parse(data).badWords;
-  filter.addWords(...badWords);
+const app = express();
+const PORT = process.env.PORT || 3002;
 
-  console.log(filter.clean("This is a dumb message."));
+// Set up sessions with cookies
+const sess = {
+  secret: 'secret key',
+  cookie: {
+    // Stored in milliseconds
+    maxAge: 24 * 60 * 60 * 1000, // expires after 1 day
+  },
+  resave: false,
+  saveUninitialized: true,
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
+};
+
+app.use(session(sess));
+app.use(routes)
+
+
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
+
+// GET Route for feedback page
+app.get('/feedback', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
+);
+
+
+const hbs = exphbs.create({
+  defaultLayout: 'main',
+  layoutsDir: path.join(__dirname, 'views/layouts'),
+  partialsDir: path.join(__dirname, 'views/partials'),
+  helpers: {
+    formatDate: function (date) {
+      return date.toLocaleDateString();
+    },
+  },
+});
+
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+
+// app.use(routes);
+
+sequelize.sync({ force: false }).then(() => {
+  app.listen(PORT, () =>
+    console.log(`Server running on port ${PORT}. Visit http://localhost:${PORT} and create an account!`
+    )
+  );
 });
