@@ -4,6 +4,11 @@ CREATE DATABASE dailyvibes_db;
 
 -- Switch to the new database
 \c dailyvibes_db;
+
+DROP TABLE IF EXISTS comments;  -- Drop comments first (due to foreign keys)
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS users;
+
 -- Create the "users" table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
