@@ -29,6 +29,15 @@ app.use(session(sess));
 app.use(routes)
 
 
+app.get('/', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/index.html'))
+);
+
+// GET Route for feedback page
+app.get('/feedback', (req, res) =>
+  res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
+);
+
 
 const hbs = exphbs.create({
   defaultLayout: 'main',

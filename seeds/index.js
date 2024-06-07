@@ -1,3 +1,4 @@
+
 const sequelize = require('../config/connection');
 const { Users, Post, Comment } = require('../models');
 const seedData = require('./seedData');
