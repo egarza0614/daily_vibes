@@ -1,8 +1,8 @@
 // seeds/seedData.js
 const seedData = {
   users: [
-    { username: 'johndoe', password: 'password123' },
-    { username: 'janedoe', password: 'password456' },
+    { email: 'johndoe@example.com', username: 'johndoe', password: 'password123' },
+    { email: 'janedoe@example.com', username: 'janedoe', password: 'password456' },
   ],
   posts: [
     { 
