@@ -59,4 +59,5 @@ router.post('/signup', (req, res) => {
         })
 })
 
-// create a login route using session
+
+module.exports = router
