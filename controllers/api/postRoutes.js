@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Posts } = require('../models/post');
+const { Posts } = require('../../models');
 
 // get all posts
 router.get('/', (req, res) => {
