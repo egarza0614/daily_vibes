@@ -11,4 +11,4 @@ Posts.hasMany(Comments)
 
 Comments.belongsTo(Posts)
 
-module.exports = { Users, Posts };
+module.exports = { Users, Posts, Comments };
