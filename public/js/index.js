@@ -1,7 +1,6 @@
-// script.js
 
 function handleSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
+    event.preventDefault(); 
   
    
     const formData = {

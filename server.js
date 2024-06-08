@@ -1,22 +1,19 @@
-const path = require('path');
-const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
-const routes = require('./controllers/homeRoutes')
-
-// const routes = require('./controllers');
+const path = require('path');
+const express = require('express');
+const routes = require('./controllers/homeRoutes');
 const sequelize = require('./config/connection');
 
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-// Set up sessions with cookies
+// Session configuration
 const sess = {
   secret: 'secret key',
   cookie: {
-    // Stored in milliseconds
-    maxAge: 24 * 60 * 60 * 1000, // expires after 1 day
+    maxAge: 24 * 60 * 60 * 1000,
   },
   resave: false,
   saveUninitialized: true,
@@ -26,19 +23,10 @@ const sess = {
 };
 
 app.use(session(sess));
-app.use(routes)
 
+app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
-
-// GET Route for feedback page
-app.get('/feedback', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
-);
-
-
+// Set up handlebars
 const hbs = exphbs.create({
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, 'views/layouts'),
@@ -50,19 +38,20 @@ const hbs = exphbs.create({
   },
 });
 
-
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(routes);
 
-// app.use(routes);
+app.get('/', (req, res) =>
+  res.render('main')
+);
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>
-    console.log(`Server running on port ${PORT}. Visit http://localhost:${PORT} and create an account!`
-    )
+    console.log(`Server running on port ${PORT}. Visit http://localhost:${PORT} and create an account!`)
   );
 });
