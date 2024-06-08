@@ -3,7 +3,7 @@ const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const express = require('express');
-const routes = require('./controllers/homeRoutes');
+const routes = require('./controllers/homeRoutes'); // Ensure this path is correct
 const sequelize = require('./config/connection');
 
 const app = express();
@@ -46,9 +46,13 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes);
 
-app.get('/', (req, res) =>
-  res.render('main')
-);
+app.get('/', (req, res) => {
+  res.render('main', { header: 'header', body: 'main' }); 
+}); 
+
+app.get('/social', (req, res) => {
+  res.render('main', { header: 'socialHneader', body: 'social' }); 
+}); 
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>
