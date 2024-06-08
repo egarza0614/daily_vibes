@@ -1,20 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const { User } = require('../models');
+const bcrypt = require('bcrypt');
+const { User } = require('../../models');
 
-// Login (updated to use username)
+// Login route
 router.post('/login', async (req, res) => {
   try {
-    const user = await User.findOne({ where: { username: req.body.username } });
+    const { loginIdentifier, password } = req.body; 
+    // Use a single field for email or username
+
+    const user = await User.findOne({
+      where: Sequelize.or(
+        { email: loginIdentifier },
+        { username: loginIdentifier }
+      )
+    });
+
     if (!user) {
-      res.status(400).json({ message: 'Incorrect username or password' });
+      res.status(400).json({ message: 'Incorrect email/username or password' });
       return;
     }
 
-    const validPassword = await bcrypt.compare(req.body.password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password);
     if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect username or password' });
+      res.status(400).json({ message: 'Incorrect email/username or password' });
       return;
     }
 
@@ -23,8 +32,9 @@ router.post('/login', async (req, res) => {
       req.session.logged_in = true;
       res.json({ user: user, message: 'You are now logged in!' });
     });
-
   } catch (err) {
     res.status(500).json(err);
   }
 });
+
+module.exports = router

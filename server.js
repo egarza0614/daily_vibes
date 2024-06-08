@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
+const routes = require('./controllers/homeRoutes')
 
 // const routes = require('./controllers');
 const sequelize = require('./config/connection');
@@ -25,6 +26,7 @@ const sess = {
 };
 
 app.use(session(sess));
+app.use(routes)
 
 
 app.get('/', (req, res) =>
@@ -42,8 +44,8 @@ const hbs = exphbs.create({
   layoutsDir: path.join(__dirname, 'views/layouts'),
   partialsDir: path.join(__dirname, 'views/partials'),
   helpers: {
-    formatDate: function(date) {
-      return date.toLocaleDateString(); 
+    formatDate: function (date) {
+      return date.toLocaleDateString();
     },
   },
 });

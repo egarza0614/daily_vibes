@@ -1,41 +1,44 @@
-// post.js
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
-const User = require('./users');
 
-class Posts extends Model { }
+class Comments extends Model { }
 
-Posts.init(
+Comments.init(
   {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true,
-      autoIncrement: true,
+      autoIncrement: true
     },
-    title: {
+    comment_text: {
       type: DataTypes.STRING,
       allowNull: false,
-    },
-    content: {
-      type: DataTypes.TEXT,
-      allowNull: false,
+      validate: {
+        len: [1] // Comment must be at least 1 character long
+      }
     },
     user_id: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       references: {
         model: 'users',
-        key: 'id',
-      },
+        key: 'id'
+      }
     },
+    post_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'posts',
+        key: 'id'
+      }
+    }
   },
   {
     sequelize,
-    timestamps: true,
+    freezeTableName: true,
     underscored: true,
-    modelName: 'posts',
+    modelName: 'comments'
   }
 );
 
-module.exports = Posts;
+module.exports = Comments;
