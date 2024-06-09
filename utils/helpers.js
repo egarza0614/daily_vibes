@@ -18,3 +18,5 @@ fs.readFile('./words.json', 'utf8', (err, data) => {
 module.exports = {
   filter: filter
 };
+
+
