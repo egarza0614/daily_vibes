@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Posts } = require('../../models');
 
-// get all posts
+
 router.get('/', (req, res) => {
   Posts.findAll({
     attributes: ['id', 'title', 'content', 'user_id']

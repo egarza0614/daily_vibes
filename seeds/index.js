@@ -23,16 +23,16 @@ const seedDatabase = async () => {
   console.log(`Seeded ${seedData.posts.length} posts`);
 
   // Seed Comments
-    // Associate comments with users and posts before bulk creation
-    const commentsWithAssociations = seedData.comments.map(comments => {
-      const randomUser = users[Math.floor(Math.random() * users.length)];
-      const randomPost = seedData.posts[Math.floor(Math.random() * seedData.posts.length)];
-      return { ...comments, user_id: randomUser.id, post_id: randomPost.id };
-    });
-    
-    await Comments.bulkCreate(commentsWithAssociations);
-    //console.log(`Seeded ${seedData.comments.length} comments`);
-  
+  // Associate comments with users and posts before bulk creation
+  const commentsWithAssociations = seedData.comments.map(comments => {
+    const randomUser = users[Math.floor(Math.random() * users.length)];
+    const randomPost = seedData.posts[Math.floor(Math.random() * seedData.posts.length)];
+    return { ...comments, user_id: randomUser.id, post_id: randomPost.id };
+  });
+
+  await Comments.bulkCreate(commentsWithAssociations);
+  //console.log(`Seeded ${seedData.comments.length} comments`);
+
   process.exit(0); // Exit the process after seeding
 };
 
