@@ -7,7 +7,6 @@ const { User } = require('../../models');
 router.post('/login', async (req, res) => {
   try {
     const { loginIdentifier, password } = req.body; 
-    // Use a single field for email or username
 
     const user = await User.findOne({
       where: Sequelize.or(
