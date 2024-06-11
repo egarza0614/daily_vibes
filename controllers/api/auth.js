@@ -1,38 +1,39 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
-const { User } = require('../../models');
+const { Users } = require('../../models');
 
 // Login route
 router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
   try {
-    const { loginIdentifier, password } = req.body; 
-
-    const user = await User.findOne({
-      where: Sequelize.or(
-        { email: loginIdentifier },
-        { username: loginIdentifier }
-      )
+    const foundUser = await Users.findOne({
+      attributes: ['id', 'username', 'password'],
+      where: {
+        username: username
+      }
     });
-
-    if (!user) {
-      res.status(400).json({ message: 'Incorrect email/username or password' });
+    if (foundUser === null) {
+      res.status(400).json({ message: 'Invalid Username' });
+      return;
+    }
+    // const validPassword = await bcrypt.compare(password, foundUser.password);
+    if (password !== foundUser.password) {
+      res.status(400).json({ message: 'Incorrect password' });
       return;
     }
 
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      res.status(400).json({ message: 'Incorrect email/username or password' });
-      return;
-    }
+    console.log(foundUser.id)
 
-    req.session.save(() => {
-      req.session.user_id = user.id;
-      req.session.logged_in = true;
-      res.json({ user: user, message: 'You are now logged in!' });
-    });
+    req.session.user_id = foundUser.id
+    req.session.authorized = true
+    res.status(200).json({ success: 'Logged in' })
+
   } catch (err) {
-    res.status(500).json(err);
+    console.error(err)
+    res.status(500).json({
+      message: "Internal server error"
+    });
   }
 });
 

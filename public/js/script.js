@@ -1,24 +1,22 @@
-// const loginFormHandler = async (event) => {
-//   event.preventDefault();
+const handleLogin = async (event) => {
+  const formData = {
+    username: document.getElementById('username').value,
+    password: document.getElementById('password').value
+  };
 
-//   const username = document.getElementById('nameSubmission').value.trim();
-//   const password = document.getElementById('passwordSubmission').value.trim();
+  const response = await fetch('/api/authentication/login', {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-//   if (username && password) {
-//     const response = await fetch('/submit', {
-//       method: 'POST',
-//       body: JSON.stringify({ username, password }),
-//       headers: { 'Content-Type': 'application/json' },
-//     });
+  if (!response.ok) {
+    alert('Failed to sign in.');
+    return
+  }
+  window.location.replace('/profile')
+};
 
-//     if (response.ok) {
-//       window.location.href = 'views/partialsprofile.handlebars'; 
-//       alert('Failed to sign up.');
-//     }
-//   }
-// };
-
-// document.getElementById('signup2').addEventListener('click', loginFormHandler);
 
 
 const matchAlertBox = document.getElementById('matchAlertBox')
@@ -45,6 +43,7 @@ const handeSignUp = (event) => {
     return
   }
   // ^^ this is not working as intended
+
   const success = confirm('Account Created!')
   if (success === true) {
     window.location.replace('/')
