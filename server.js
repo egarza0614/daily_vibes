@@ -11,20 +11,14 @@ const frontendRoutes = require('./frontend/routes')
 const app = express();
 const PORT = process.env.PORT || 3002;
 
-const sess = {
-  secret: 'secret key',
-  cookie: {
-    maxAge: 24 * 60 * 60 * 1000,
-  },
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: 'my secret',
   resave: false,
   saveUninitialized: true,
-  store: new SequelizeStore({
-    db: sequelize,
-  }),
-};
-
-
-app.use(express.static(path.join(__dirname, 'public')));
+  cookie: { secure: 'auto' }
+}))
 
 const hbs = exphbs.create({
   defaultLayout: 'main',
@@ -33,7 +27,6 @@ const hbs = exphbs.create({
   helpers: path.join(__dirname, './utils/helpers')
 });
 // const hbs = exphbs.create({ helpers });
-
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');

@@ -13,7 +13,6 @@ DROP TABLE IF EXISTS users;
 -- Create the "users" table
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
     username VARCHAR(50) UNIQUE NOT NULL,  
     password TEXT NOT NULL,
     bio TEXT,                         

@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Users, Posts } = require('../../models')
+const { Users } = require('../../models')
 
 // find all users
 router.get('/', (req, res) => {
@@ -54,8 +54,7 @@ router.post('/signup', (req, res) => {
         })
         .catch((err) => {
             console.error(err)
-            res.status(400).json({ error: 'Account Already Exists' })
-            return
+            return res.status(400).json({ error: 'Account Already Exists' })
         })
 })
 
