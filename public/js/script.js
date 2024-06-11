@@ -21,55 +21,49 @@
 // document.getElementById('signup2').addEventListener('click', loginFormHandler);
 
 
+const matchAlertBox = document.getElementById('matchAlertBox')
 
-const handleSubmit = (event) => {
-  event.preventDefault();
-
-
+const handeSignUp = (event) => {
   const formData = {
-    name: document.getElementById('nameSubmission').value,
-    email: document.getElementById('emailSubmission').value,
-    password: document.getElementById('passwordSubmission').value
+    username: document.getElementById('username').value,
+    password: document.getElementById('password').value
   };
 
+  checkPasswordMatch(formData)
 
-  fetch('/submit', {
+  const response = fetch('/api/users/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(formData)
   })
-    .then(response => response.json())
-    .then(data => {
 
-      if (data.errors) {
-
-        const errorContainer = document.getElementById('errorContainer');
-        errorContainer.innerHTML = '';
-
-        data.errors.forEach(error => {
-          console.error(error.msg);
-
-          const errorMessage = document.createElement('p');
-          errorMessage.textContent = error.msg;
-          errorContainer.appendChild(errorMessage);
-        });
-      } else {
-        console.log('Form submitted successfully');
-
-      }
-      alert('Congratulations, you are signed up!');
-      console.log('Form submitted successfully');
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-
-  if (response.ok) {
-    window.location.href = 'views/partialsprofile.handlebars';
-    alert('Failed to sign up.');
+  console.log(!response.ok)
+  if (!response.ok === false) {
+    alert('Username is taken!')
+    return
   }
+  // ^^ this is not working as intended
+  const success = confirm('Account Created!')
+  if (success === true) {
+    window.location.replace('/')
+  }
+
 }
 
-document.getElementById('signupForm').addEventListener('submit', handleSubmit);
+function clearAlert() {
+  matchAlertBox.innerHTML = null
+}
+
+function checkPasswordMatch(formData) {
+  const confirmPassword = document.getElementById('confirmPassword').value
+  matchAlertBox.innerHTML = null
+  if (confirmPassword !== formData.password) {
+    const matchAlert = document.createElement('p')
+    matchAlert.innerHTML = "Passwords don't match!"
+    matchAlertBox.appendChild(matchAlert)
+    return
+  }
+  return
+}

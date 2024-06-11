@@ -54,8 +54,7 @@ router.post('/signup', (req, res) => {
         })
         .catch((err) => {
             console.error(err)
-            res.status(400).json({ error: 'Account Already Exists' })
-            return
+            return res.status(400).json({ error: 'Account Already Exists' })
         })
 })
 
