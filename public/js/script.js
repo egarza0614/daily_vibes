@@ -1,27 +1,3 @@
-// const loginFormHandler = async (event) => {
-//   event.preventDefault();
-
-//   const username = document.getElementById('nameSubmission').value.trim();
-//   const password = document.getElementById('passwordSubmission').value.trim();
-
-//   if (username && password) {
-//     const response = await fetch('/submit', {
-//       method: 'POST',
-//       body: JSON.stringify({ username, password }),
-//       headers: { 'Content-Type': 'application/json' },
-//     });
-
-//     if (response.ok) {
-//       window.location.href = 'views/partialsprofile.handlebars'; 
-//       alert('Failed to sign up.');
-//     }
-//   }
-// };
-
-// document.getElementById('signup2').addEventListener('click', loginFormHandler);
-
-
-
   const handleSubmit = (event) => {
     event.preventDefault(); 
     
@@ -61,16 +37,14 @@
       }
       alert('Congratulations, you are signed up!');
       console.log('Form submitted successfully');
-    })
 
     if (response.ok) {
       window.location.href = 'views/partialsprofile.handlebars'; 
       alert('Failed to sign up.');
     }
-  }
+  }})
     .catch(error => {
       console.error('Error:', error);
-    
     });
   
   document.getElementById('signupForm').addEventListener('submit', handleSubmit);
