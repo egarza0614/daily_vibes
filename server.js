@@ -42,26 +42,6 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(routes); 
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname,'./views/layouts/main.handlebars'))
-// });
-
-
-// app.post('/submit', (req, res) => {
-//   const formData = req.body;
-//   console.log(formData);
-//   res.redirect('/profile');
-// });
-
-
-// app.get('/profile', (req, res) => {
-//   res.sendFile((path.join(__dirname,'./views/layouts/profile.handlebars')))
-// });
-  
-
-// app.get('/signup',(req,res) => {
-//   res.sendFile((path.join(__dirname,'./views/layouts/signup.handlebars')))
-// });
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>

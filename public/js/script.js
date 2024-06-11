@@ -1,59 +1,77 @@
-// const profileBtn = document.getElementById('submit');
+// const loginFormHandler = async (event) => {
+//   event.preventDefault();
 
-//   async function handleSubmit(event) {
-//     event.preventDefault(); 
+//   const username = document.getElementById('nameSubmission').value.trim();
+//   const password = document.getElementById('passwordSubmission').value.trim();
 
-//     const formData = {
-//         Name: document.getElementById('name').value,
-//         Passowrd: document.getElementById('pass').value,
-//     };
+//   if (username && password) {
+//     const response = await fetch('/submit', {
+//       method: 'POST',
+//       body: JSON.stringify({ username, password }),
+//       headers: { 'Content-Type': 'application/json' },
+//     });
 
-//     try {
-//         const response = await fetch('/submit', {
-//             method: 'POST',
-//             headers: {
-//                 'Content-Type': 'application/json'
-//             },
-//             body: JSON.stringify(formData)
-//         });
-
-//         if (!response.ok) {
-//             throw new Error('Network response was not ok');
-//         }
-
-//         const formData = await response.json();
-//         window.location.href = '../../views/layouts/social.handlebars';
- 
-//     } catch (err) {
-//         console.error(err);
+//     if (response.ok) {
+//       window.location.href = 'views/partialsprofile.handlebars'; 
+//       alert('Failed to sign up.');
+//     }
+//   }
 // };
 
-const loginFormHandler = async (event) => {
-    event.preventDefault();
+// document.getElementById('signup2').addEventListener('click', loginFormHandler);
+
+
+
+  const handleSubmit = (event) => {
+    event.preventDefault(); 
+    
+    
+    const formData = {
+      name: document.getElementById('nameSubmission').value,
+      email: document.getElementById('emailSubmission').value,
+      password: document.getElementById('passwordSubmission').value
+    };
   
-    const username = document.getElementById('#name').value.trim();
-    const password = document.qgetElementById('#pass').value.trim();
-  
-    if (username && password) {
-      const response = await fetch('/api/users', {
-        method: 'POST',
-        body: JSON.stringify({ username, password }),
-        headers: { 'Content-Type': 'application/json' },
-      });
-  
-      if (response.ok) {
-        document.location.replace('/');
+    
+    fetch('/submit', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+    .then(response => response.json())
+    .then(data => {
+   
+      if (data.errors) {
+   
+        const errorContainer = document.getElementById('errorContainer');
+        errorContainer.innerHTML = '';
+
+        data.errors.forEach(error => {
+          console.error(error.msg); 
+          
+          const errorMessage = document.createElement('p');
+          errorMessage.textContent = error.msg;
+          errorContainer.appendChild(errorMessage);
+        });
       } else {
-        alert('Failed to sign up.');
+        console.log('Form submitted successfully');
+      
       }
+      alert('Congratulations, you are signed up!');
+      console.log('Form submitted successfully');
+    })
+
+    if (response.ok) {
+      window.location.href = 'views/partialsprofile.handlebars'; 
+      alert('Failed to sign up.');
     }
-  };
+  }
+    .catch(error => {
+      console.error('Error:', error);
+    
+    });
   
-//   document
-//     .querySelector('.login-form')
-//     .addEventListener('submit', loginFormHandler);
-  
-//   document
-//     .querySelector('.signup-form')
-//     .addEventListener('submit', signupFormHandler);
+  document.getElementById('signupForm').addEventListener('submit', handleSubmit);
   
