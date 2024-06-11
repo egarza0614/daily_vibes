@@ -5,7 +5,7 @@ const commentRoutes = require('./api/commentRoutes')
 const authentication = require('./api/authRoutes')
 const signupRoutes =require('./api/signupRoutes')
 const profileRoutes =require('./api/profileRoutes')
-const vibesRoutes =require('./api/vibesRoutes')
+const vibeRoutes =require('./api/vibeRoutes')
 
 
 router.use('/api/users', userRoutes);
@@ -14,7 +14,7 @@ router.use('/api/comments', commentRoutes);
 router.use('/api/authentication', authentication);
 router.use('/api/signupRoutes', signupRoutes);
 router.use('/api/profileRoutes', profileRoutes);
-router.use('/api/vibeRoutes',vibesRoutes);
+router.use('/api/vibeRoutes',vibeRoutes);
 
 
 module.exports = router
