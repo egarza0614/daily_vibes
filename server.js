@@ -3,9 +3,10 @@ const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const express = require('express');
-const routes = require('./controllers/homeRoutes'); 
+const apiroutes = require('./controllers/routes');
 const sequelize = require('./config/connection');
 const helpers = require('./utils/helpers');
+const frontendRoutes = require('./frontend/routes')
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -29,39 +30,20 @@ const hbs = exphbs.create({
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, './views/layouts'),
   partialsDir: path.join(__dirname, './views/partials'),
-  helpers: path.join(__dirname,'./utils/helpers' )
+  helpers: path.join(__dirname, './utils/helpers')
 });
 // const hbs = exphbs.create({ helpers });
 
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
-
+app.use(express.static(__dirname + 'public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(routes); 
+app.use(apiroutes);
+app.use(frontendRoutes)
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname,'./views/layouts/main.handlebars'))
-// });
-
-
-// app.post('/submit', (req, res) => {
-//   const formData = req.body;
-//   console.log(formData);
-//   res.redirect('/profile');
-// });
-
-
-// app.get('/profile', (req, res) => {
-//   res.sendFile((path.join(__dirname,'./views/layouts/profile.handlebars')))
-// });
-  
-
-// app.get('/signup',(req,res) => {
-//   res.sendFile((path.join(__dirname,'./views/layouts/signup.handlebars')))
-// });
 
 sequelize.sync({ force: false }).then(() => {
   app.listen(PORT, () =>
