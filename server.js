@@ -3,10 +3,8 @@ const exphbs = require('express-handlebars');
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const path = require('path');
 const express = require('express');
-const apiroutes = require('./controllers/routes');
+const controllers = require('./controllers');
 const sequelize = require('./config/connection');
-const helpers = require('./utils/helpers');
-const frontendRoutes = require('./frontend/routes')
 
 const app = express();
 const PORT = process.env.PORT || 3002;
@@ -34,8 +32,8 @@ app.use(express.static(__dirname + 'public'))
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(apiroutes);
-app.use(frontendRoutes)
+app.use(controllers);
+
 
 
 sequelize.sync({ force: false }).then(() => {
