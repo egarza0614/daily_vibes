@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+const validateSignUpData = require('express-validator');
 
 const validateSignUpData = [
   body('name').notEmpty().withMessage('Username is required'),
