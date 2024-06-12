@@ -58,5 +58,20 @@ router.post('/signup', (req, res) => {
         })
 })
 
+router.put('/updatePassword', (req, res) => {
+    const { password } = req.body;
+    Users.update({
+        password: password,
+        user_id: req.session.user_id
+    })
+        .then(() => {
+            return res.status(200).json({ success: "Password updated successfully!" })
+        })
+        .catch((err) => {
+            console.error(err)
+            return res.status(400).json({ error: "Unable to update password." })
+        })
+})
+
 
 module.exports = router
