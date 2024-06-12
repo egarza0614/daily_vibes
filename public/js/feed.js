@@ -1,4 +1,4 @@
-async function testing() {
+async function showFeed() {
     console.log('i work')
     const response = await fetch('/api/posts', {
         method: "GET",
@@ -10,5 +10,22 @@ async function testing() {
     console.log(returnedResponse)
 
 }
+showFeed()
 
-testing()
+async function createPost() {
+    const data = {
+        title: document.getElementById('userTitle').value,
+        content: document.getElementById('userInput').value
+    }
+
+    console.log('testing')
+    const response = await fetch('/api/posts', {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            "Content-type": "application/json"
+        }
+    })
+    const returnedResponse = await response.json()
+    console.log(returnedResponse)
+}

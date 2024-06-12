@@ -34,14 +34,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/:user_id', (req, res) => {
+router.post('/', (req, res) => {
   const { title, content } = req.body
+  console.log(req.body)
   Posts.create({
     title: title,
     content: content,
-    user_id: req.params.user_id,
+    user_id: req.session.user_id,
     where: {
-      user_id: req.params.user_id
+      user_id: req.session.user_id
     }
   })
     .then((result) => {
