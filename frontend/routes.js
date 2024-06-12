@@ -12,4 +12,8 @@ router.get('/', function (req, res, next) {
 router.get('/profile', function (req, res, next) {
     res.render('profile.handlebars', { title: 'dailyvibes' });
 });
+
+router.get('/posts', function (req, res, next) {
+    res.render('posts.handlebars', { title: 'Your Feed' })
+})
 module.exports = router;

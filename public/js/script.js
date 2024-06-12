@@ -14,7 +14,7 @@ const handleLogin = async (event) => {
     alert('Failed to sign in.');
     return
   }
-  window.location.replace('/profile')
+  window.location.replace('/posts')
 };
 
 
