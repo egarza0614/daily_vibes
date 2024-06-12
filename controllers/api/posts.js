@@ -4,8 +4,12 @@ const { Posts } = require('../../models');
 
 
 router.get('/', (req, res) => {
+  console.log(req.session.user_id)
+  if (!req.session.user_id) {
+    return res.status(401).json({ error: "Unauthorized" })
+  }
   Posts.findAll({
-    attributes: ['id', 'title', 'content', 'user_id']
+    attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
   })
     .then((result) => {
       return res.status(200).json(result)
