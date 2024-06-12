@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const { Users, Posts } = require('../../models')
+const { Users } = require('../../models')
 
 // find all users
 router.get('/', (req, res) => {
@@ -54,8 +54,22 @@ router.post('/signup', (req, res) => {
         })
         .catch((err) => {
             console.error(err)
-            res.status(400).json({ error: 'Account Already Exists' })
-            return
+            return res.status(400).json({ error: 'Account Already Exists' })
+        })
+})
+
+router.put('/updatePassword', (req, res) => {
+    const { password } = req.body;
+    Users.update({
+        password: password,
+        user_id: req.session.user_id
+    })
+        .then(() => {
+            return res.status(200).json({ success: "Password updated successfully!" })
+        })
+        .catch((err) => {
+            console.error(err)
+            return res.status(400).json({ error: "Unable to update password." })
         })
 })
 
