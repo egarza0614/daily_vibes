@@ -28,4 +28,5 @@ async function createPost() {
     })
     const returnedResponse = await response.json()
     console.log(returnedResponse)
+    return returnedResponse
 }
