@@ -26,8 +26,18 @@ async function handleLogin() {
   } catch(e){
     console.error(e)
   }
-}
 
+}
+  window.location.replace('/posts')
+};
+
+const matchAlertBox = document.getElementById('matchAlertBox')
+
+const handleSignUp = (event) => {
+  const formData = {
+    username: document.getElementById('username').value,
+    password: document.getElementById('password').value
+  };
 
 
 async function createPost() {
@@ -51,4 +61,29 @@ async function createPost() {
   } catch (error) {
     console.error(error);
   }
+
+}
+
+  // ^^ this is not working as intended
+
+  const success = confirm('Account Created!')
+  if (success === true) {
+    window.location.replace('/')
+  }
+}
+
+function clearAlert() {
+  matchAlertBox.innerHTML = null
+}
+
+function checkPasswordMatch(formData) {
+  const confirmPassword = document.getElementById('confirmPassword').value
+  matchAlertBox.innerHTML = null
+  if (confirmPassword !== formData.password) {
+    const matchAlert = document.createElement('p')
+    matchAlert.innerHTML = "Passwords don't match!"
+    matchAlertBox.appendChild(matchAlert)
+    return
+  }
+  return
 }
