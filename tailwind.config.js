@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./views/**/*.{html,js,handlebars}", "./views/partials/**/*.{html,js,handlebars}"],
+  content: ["./views/**/*.{html,js,handlebars}", "./views/partials/**/*.{html,js,handlebars}", "./public/**/*.{html,js,handlebars}"],
   theme: {
     extend: {
       colors: {

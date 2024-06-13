@@ -24,7 +24,6 @@ router.get('/', (req, res) => {
     })
 })
 
-// get post by id
 router.get('/:id', async (req, res) => {
   try {
     const postData = await Posts.findByPk(req.params.id);
@@ -35,9 +34,11 @@ router.get('/:id', async (req, res) => {
     res.status(400).json(err);
   }
 });
+
 router.post('/', (req, res) => {
-  console.log("CREATING POST", req.session)
+  console.log("test")
   const { title, content } = req.body
+
   console.log(req.body)
 
   Posts.create({
@@ -58,6 +59,23 @@ router.post('/', (req, res) => {
       })
     })
 })
+
+router.get('/posts', async function (req, res, next) {
+  console.log("GETTING POSTS")
+  let posts = await Posts.findAll({
+    attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
+  })
+  posts.forEach(p => {
+    console.log(p)
+    console.log(p.dataValues)
+  })
+  posts = posts.map(p => {
+    return {
+      title: p.dataValues.title,
+      content: p.dataValues.content
+    }
+  })
+});
 
 
 router.delete('/:id', (req, res) => {
