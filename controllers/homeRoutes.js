@@ -1,20 +1,19 @@
-const router = require('express').Router()
-const userRoutes = require('./api/userRoutes')
-const postRoutes = require('./api/postRoutes')
-const commentRoutes = require('./api/commentRoutes')
-const authentication = require('./api/authRoutes')
-const signupRoutes =require('./api/signupRoutes')
-const profileRoutes =require('./api/profileRoutes')
-const vibeRoutes =require('./api/vibeRoutes')
+const express = require('express');
+const router = express.Router();
 
+router.get('/signup', function (req, res, next) {
+    res.render('signup.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
+});
 
-router.use('/api/users', userRoutes);
-router.use('/api/posts', postRoutes);
-router.use('/api/comments', commentRoutes);
-router.use('/api/authentication', authentication);
-router.use('/api/signupRoutes', signupRoutes);
-router.use('/api/profileRoutes', profileRoutes);
-router.use('/api/vibeRoutes',vibeRoutes);
+router.get('/', function (req, res, next) {
+    res.render('home.handlebars', { title: 'hello' });
+});
 
+router.get('/profile', function (req, res, next) {
+    res.render('profile.handlebars', { title: 'dailyvibes' });
+});
 
-module.exports = router
+router.get('/posts', function (req, res, next) {
+    res.render('posts.handlebars', { title: 'Your Feed' })
+})
+module.exports = router;

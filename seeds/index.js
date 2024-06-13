@@ -5,7 +5,7 @@ const seedData = require('./seedData');
 
 
 const seedDatabase = async () => {
-  await sequelize.sync(); // Create tables
+  await sequelize.sync({ force: true }); // Create tables
 
   // Seed Users
   const users = await Users.bulkCreate(seedData.users, {

@@ -1,0 +1,35 @@
+<div class="h-full">
+  <div class="w-full h-full flex justify-center items-center flex-col gap-2">
+    <h1 class="text-center font-spicy-rice-regular pt-4 text-6xl text-vibes-dark-green">Daily Vibes</h1>
+    <div
+      class="flex items-center w-96 h-[50%] justify-center bg-white rounded-md border-2 border-solid border-vibes-light-green shadow-2xl flex-col">
+      <p class="text-vibes-medium-green font-bold text-2xl mb-6">Welcome to Daily Vibes!</p>
+      <form action="/submit" method="POST" class="w-3/4">
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-vibes-dark-green">Username</label>
+          <input type="text" id="username" name="name" oninput="clearAlert()" required
+            class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+          <input type="password" id="password" name="password" oninput="clearAlert()" required
+            class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100">
+        </div>
+        <div class="mb-4">
+          <label for="password" class="block text-sm font-medium text-gray-700">Confirm password</label>
+          <input type="password" id="confirmPassword" name="confirmPassword" oninput="clearAlert()" required
+            class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100">
+        </div>
+        <div class="text-center">
+          <button type="button" id="signup2" onclick="handeSignUp()"
+            class="px-4 py-2 border bg-vibes-light-green rounded-md w-full text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
+            Create Account
+          </button>
+        </div>
+        <div id="matchAlertBox" class="text-center text-vibes-alert-red font-bold"></div>
+        <p class="text-center mt-4">Already have an account? <a href="/" class="text-vibes-dark-green font-bold">Sign
+            In</a></p>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,51 +1,65 @@
-  const handleSubmit = (event) => {
-    event.preventDefault(); 
-    
-    
-    const formData = {
-      name: document.getElementById('nameSubmission').value,
-      email: document.getElementById('emailSubmission').value,
-      password: document.getElementById('passwordSubmission').value
-    };
-  
-    
-    fetch('/submit', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-   
-      if (data.errors) {
-   
-        const errorContainer = document.getElementById('errorContainer');
-        errorContainer.innerHTML = '';
+const handleLogin = async (event) => {
+  const formData = {
+    username: document.getElementById('username').value,
+    password: document.getElementById('password').value
+  };
 
-        data.errors.forEach(error => {
-          console.error(error.msg); 
-          
-          const errorMessage = document.createElement('p');
-          errorMessage.textContent = error.msg;
-          errorContainer.appendChild(errorMessage);
-        });
-      } else {
-        console.log('Form submitted successfully');
-      
-      }
-      alert('Congratulations, you are signed up!');
-      console.log('Form submitted successfully');
+  const response = await fetch('/api/authentication/login', {
+    method: 'POST',
+    body: JSON.stringify(formData),
+    headers: { 'Content-Type': 'application/json' },
+  });
 
-    if (response.ok) {
-      window.location.href = 'views/partialsprofile.handlebars'; 
-      alert('Failed to sign up.');
-    }
-  }})
-    .catch(error => {
-      console.error('Error:', error);
-    });
-  
-  document.getElementById('signupForm').addEventListener('submit', handleSubmit);
-  
+  if (!response.ok) {
+    alert('Failed to sign in.');
+    return
+  }
+  window.location.replace('/posts')
+};
+
+const matchAlertBox = document.getElementById('matchAlertBox')
+
+const handeSignUp = (event) => {
+  const formData = {
+    username: document.getElementById('username').value,
+    password: document.getElementById('password').value
+  };
+
+  checkPasswordMatch(formData)
+
+  const response = fetch('/api/users/signup', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(formData)
+  })
+
+  console.log(!response.ok)
+  if (!response.ok === false) {
+    alert('Username is taken!')
+    return
+  }
+  // ^^ this is not working as intended
+
+  const success = confirm('Account Created!')
+  if (success === true) {
+    window.location.replace('/')
+  }
+}
+
+function clearAlert() {
+  matchAlertBox.innerHTML = null
+}
+
+function checkPasswordMatch(formData) {
+  const confirmPassword = document.getElementById('confirmPassword').value
+  matchAlertBox.innerHTML = null
+  if (confirmPassword !== formData.password) {
+    const matchAlert = document.createElement('p')
+    matchAlert.innerHTML = "Passwords don't match!"
+    matchAlertBox.appendChild(matchAlert)
+    return
+  }
+  return
+}

@@ -4,8 +4,12 @@ const { Posts } = require('../../models');
 
 
 router.get('/', (req, res) => {
+  console.log(req.session.user_id)
+  if (!req.session.user_id) {
+    return res.status(401).json({ error: "Unauthorized" })
+  }
   Posts.findAll({
-    attributes: ['id', 'title', 'content', 'user_id']
+    attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
   })
     .then((result) => {
       return res.status(200).json(result)
@@ -30,14 +34,15 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-router.post('/:user_id', (req, res) => {
+router.post('/', (req, res) => {
   const { title, content } = req.body
+  console.log(req.body)
   Posts.create({
     title: title,
     content: content,
-    user_id: req.params.user_id,
+    user_id: req.session.user_id,
     where: {
-      user_id: req.params.user_id
+      user_id: req.session.user_id
     }
   })
     .then((result) => {
