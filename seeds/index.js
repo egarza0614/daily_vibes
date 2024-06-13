@@ -5,6 +5,7 @@ const seedData = require('./seedData');
 
 
 const seedDatabase = async () => {
+ 
   await sequelize.sync({ force: true }); // Create tables
 
   // Seed Users
@@ -35,7 +36,6 @@ const seedDatabase = async () => {
 
   process.exit(0); // Exit the process after seeding
 };
-
+console.log("seeding..$")
 seedDatabase();
 
-module.exports
