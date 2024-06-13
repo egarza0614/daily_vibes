@@ -29,7 +29,8 @@ const matchAlertBox = document.getElementById('matchAlertBox')
 const handleSignUp = async (event) => {
   const formData = {
     username: document.getElementById('username').value,
-    password: document.getElementById('password').value
+    password: document.getElementById('password').value,
+    confirmPassword: document.getElementById('confirmPassword').value
   };
   const response = await fetch('/api/users/signup', {
     method: "POST",
@@ -38,12 +39,15 @@ const handleSignUp = async (event) => {
       'Content-Type': 'application/json'
     },
   })
+  console.log(response)
+  checkPasswordMatch(formData)
   if (!response.ok) {
     return
-  }
-  const success = confirm('Account Created!')
-  if (success === true) {
-    window.location.replace('/');
+  } else {
+    const success = confirm('Account Created!')
+    if (success === true) {
+      window.location.replace('/');
+    }
   }
 };
 

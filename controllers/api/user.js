@@ -42,20 +42,26 @@ router.get('/:username', (req, res) => {
 
 // create account
 router.post('/signup', (req, res) => {
-    const { username, password } = req.body;
-    Users.create({
-        username: username,
-        password: password
-    })
-        .then(() => {
-            return res.status(200).json({
-                message: 'Account created successfully!'
+    const { username, password, confirmPassword } = req.body;
+    if (password !== confirmPassword) {
+        return res.status(400).json({ error: "Passwords dont match!" })
+    }
+    if (password === confirmPassword) {
+
+        Users.create({
+            username: username,
+            password: password
+        })
+            .then(() => {
+                return res.status(200).json({
+                    message: 'Account created successfully!'
+                })
             })
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.status(400).json({ error: 'Account Already Exists' })
-        })
+            .catch((err) => {
+                console.error(err)
+                return res.status(400).json({ error: 'Account Already Exists' })
+            })
+    }
 })
 
 router.put('/updatePassword', (req, res) => {
