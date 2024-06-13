@@ -1,45 +1,69 @@
-const handleLogin = async (event) => {
-  const formData = {
-    username: document.getElementById('username').value,
-    password: document.getElementById('password').value
-  };
 
-  const response = await fetch('/api/authentication/login', {
-    method: 'POST',
-    body: JSON.stringify(formData),
-    headers: { 'Content-Type': 'application/json' },
-  });
+async function handleLogin() {
+  console.log("HANDLE LOGIN")
 
-  if (!response.ok) {
-    alert('Failed to sign in.');
-    return
+  try {
+
+    // Making an API request 
+    fetch('/api/authentication/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: 'jane', // here you would get the info from the UI aka document.querySelector
+        password: 'password456'
+      })
+    })     
+ .then(async (res) => {
+      console.log(res)
+      const json = await res.json()
+      if (json.success) {
+        window.location.href = '/posts'
+        }
+    })  
+
+  } catch(e){
+    console.error(e)
   }
+
+}
   window.location.replace('/posts')
 };
 
 const matchAlertBox = document.getElementById('matchAlertBox')
 
-const handeSignUp = (event) => {
+const handleSignUp = (event) => {
   const formData = {
     username: document.getElementById('username').value,
     password: document.getElementById('password').value
   };
 
-  checkPasswordMatch(formData)
 
-  const response = fetch('/api/users/signup', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(formData)
-  })
+async function createPost() {
+  try {
+    const title = document.getElementById('userTitle').value;
+    const content = document.getElementById('userInput').value;
 
-  console.log(!response.ok)
-  if (!response.ok === false) {
-    alert('Username is taken!')
-    return
+    const response = await fetch('/api/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title, content })
+    });
+    console.log("response", response)
+    if (response.ok) {
+      window.location.reload();
+    } else {
+      console.error('Failed to create post');
+    }
+  } catch (error) {
+    console.error(error);
   }
+
+}
+
   // ^^ this is not working as intended
 
   const success = confirm('Account Created!')

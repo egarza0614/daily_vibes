@@ -3,7 +3,9 @@ const router = express.Router();
 const { Posts } = require('../../models');
 
 
+
 router.get('/', (req, res) => {
+  console.log("POOOOOOOOOST!")
   console.log(req.session.user_id)
   if (!req.session.user_id) {
     return res.status(401).json({ error: "Unauthorized" })
@@ -33,10 +35,11 @@ router.get('/:id', async (req, res) => {
     res.status(400).json(err);
   }
 });
-
 router.post('/', (req, res) => {
+  console.log("CREATING POST", req.session)
   const { title, content } = req.body
   console.log(req.body)
+
   Posts.create({
     title: title,
     content: content,
@@ -55,6 +58,7 @@ router.post('/', (req, res) => {
       })
     })
 })
+
 
 router.delete('/:id', (req, res) => {
   Posts.destroy({

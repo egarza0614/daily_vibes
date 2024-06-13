@@ -5,7 +5,10 @@ const { Users } = require('../../models');
 
 // Login route
 router.post('/login', async (req, res) => {
+  console.log("Server Login", req.body)
   const { username, password } = req.body;
+
+  console.log("Username", username, "Password", password)
   try {
     const foundUser = await Users.findOne({
       attributes: ['id', 'username', 'password'],
@@ -13,6 +16,7 @@ router.post('/login', async (req, res) => {
         username: username
       }
     });
+    console.log("foundUser", foundUser)
     if (foundUser === null) {
       res.status(400).json({ message: 'Invalid Username' });
       return;
@@ -25,6 +29,7 @@ router.post('/login', async (req, res) => {
 
     console.log(foundUser.id)
 
+    // here the user id is being set
     req.session.user_id = foundUser.id
     req.session.authorized = true
     res.status(200).json({ success: 'Logged in' })

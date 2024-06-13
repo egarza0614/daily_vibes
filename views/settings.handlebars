@@ -1,0 +1,69 @@
+<div class="h-full flex justify-center items-center">
+    <div class="w-full max-w-lg h-full flex flex-col gap-4">
+        <h1 class="text-center font-spicy-rice-regular text-6xl text-vibes-dark-green flex items-center">
+            Settings Page <span class="ml-2 text-3xl" role="img" aria-label="settings emoji">⚙️</span>
+        </h1>
+        <div
+            class="flex flex-col items-center bg-white rounded-md border-2 border-solid border-vibes-light-green shadow-2xl p-8">
+            <div class="mb-4 flex items-center">
+                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your profile picture</p>
+                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
+                <button
+                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
+                    Update Profile
+                </button>
+            </div>
+            <div class="mb-4 flex items-center">
+                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your password</p>
+                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
+                <button id="updatePasswordButton" onclick="openPasswordPopup()"
+                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
+                    Update Password
+                </button>
+            </div>
+            <div class="mb-4 flex items-center">
+                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your username</p>
+                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
+                <button id="updateUsernameButton" onclick="openUsernamePopup()"
+                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
+                    Update Username
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div id="passwordPopup"
+    class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 hidden">
+    <div class="bg-white p-8 rounded-md">
+        <h2 class="text-2xl font-bold text-vibes-dark-green mb-4">Update Password</h2>
+        <input type="password" placeholder="New Password"
+            class="w-full p-2 border border-vibes-light-green rounded-md mb-4">
+        <input type="password" placeholder="Confirm Password"
+            class="w-full p-2 border border-vibes-light-green rounded-md mb-4">
+        <div class="flex justify-end">
+            <button onclick="PasswordPopup()"
+                class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green mr-2">Cancel</button>
+            <button
+                class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">Update</button>
+        </div>
+    </div>
+</div>
+
+<div id="usernamePopup"
+    class="fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50 hidden">
+    <div class="bg-white p-8 rounded-md">
+        <h2 class="text-2xl font-bold text-vibes-dark-green mb-4">Update Username</h2>
+        <input type="text" placeholder="New Username"
+            class="w-full p-2 border border-vibes-light-green rounded-md mb-4">
+        <div class="flex justify-end">
+            <button onclick="UsernamePopup()"
+                class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green mr-2">Cancel</button>
+            <button
+                class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">Update</button>
+        </div>
+    </div>
+</div>
