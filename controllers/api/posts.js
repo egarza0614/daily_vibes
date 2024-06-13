@@ -5,7 +5,6 @@ const { Posts } = require('../../models');
 
 
 router.get('/', (req, res) => {
-  console.log("POOOOOOOOOST!")
   console.log(req.session.user_id)
   if (!req.session.user_id) {
     return res.status(401).json({ error: "Unauthorized" })
@@ -44,10 +43,10 @@ router.post('/', (req, res) => {
     title: title,
     content: content,
     user_id: req.session.user_id,
-    where: {
-      user_id: req.session.user_id
-    }
-  })
+  //   where: {
+  //     user_id: req.session.user_id
+  //   }
+   })
     .then((result) => {
       return res.status(200).json(result)
     })
@@ -79,6 +78,6 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-// c
+
 
 module.exports = router;
