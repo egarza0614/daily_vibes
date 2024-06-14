@@ -35,6 +35,10 @@ app.use(express.urlencoded({ extended: true }));
 //app.use(express.static(__dirname + 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+const filterBadWords = require('./middleware/badwords');
+app.use(filterBadWords);
+// const filterbadwords = require('bad-words');
+
 //Routes
 const controllers = require('./controllers');
 app.use(controllers);
