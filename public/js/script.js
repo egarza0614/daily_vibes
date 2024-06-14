@@ -80,6 +80,8 @@ async function createPost() {
       body: JSON.stringify({ title, content })
     });
     console.log("response", response)
+    // Redirect to the newly created post's page
+    window.location.href = `/`;
     if (!response.ok) {
       console.error('Failed to create post');
     }

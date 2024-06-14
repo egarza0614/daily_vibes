@@ -14,13 +14,12 @@
                 onclick="createPost()">Post</button>
         </div>
     </div>
-    <div id="posts-container" class="mt-4">
+    <div id="posts-container" class="mt-4 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
         {{#each posts}}
-        <div class="post">
+        <div class="bg-white rounded-lg shadow-md p-6">
             <h2>{{title}}</h2>
             <p>{{content}}</p>
         </div>
         {{/each}}
     </div>
-</div>
 </div>

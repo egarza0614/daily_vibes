@@ -69,12 +69,7 @@ router.get('/posts', async function (req, res, next) {
     console.log(p)
     console.log(p.dataValues)
   })
-  posts = posts.map(p => {
-    return {
-      title: p.dataValues.title,
-      content: p.dataValues.content
-    }
-  })
+  posts = posts.map(p => post.get({ plain:true })
 });
 
 
