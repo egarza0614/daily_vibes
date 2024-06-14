@@ -27,8 +27,15 @@
                         {{content}}
                     </div>
                 </div>
-                <div class="displayDateBox">
-                    {{created_at}}
+                <div class="flex justify-between items-center mt-1">
+                    <div class="flex items-center w-1/2 gap-4">
+                        <i class="fa-regular fa-heart cursor-pointer text-vibes-medium-green text-2xl"></i>
+                        <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
+                        <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
+                    </div>
+                    <div class="displayDateBox flex justify-end w-1/2">
+                        {{created_at}}
+                    </div>
                 </div>
             </div>
             {{/each}}
