@@ -5,11 +5,11 @@ const { Posts } = require('../models');
 router.get('/signup', function (req, res, next) {
     res.render('signup.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
 });
- 
+
 router.get('/login', function (req, res, next) {
-    res.render('login.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
+    res.render('login.handlebars', { title: 'daily vibes' });
 });
- 
+
 router.get('/', function (req, res, next) {
     res.render('home.handlebars', { title: 'hello' });
 });
@@ -33,13 +33,13 @@ router.get('/posts', async function (req, res, next) {
             content: p.dataValues.content
         }
     })
-
- 
-    res.render('posts.handlebars', { title: 'Your Feet', posts})
+res.render('posts.handlebars', { title: 'profile', posts});
 });
+ 
+
 
 router.get('/settings', function (req, res, next) {
-    res.render('settings.handlebars', { title: 'Update Settings' })
-})
+                res.render('settings.handlebars', { title: 'Settings page' })
+            })
 
 module.exports = router;
