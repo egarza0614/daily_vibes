@@ -16,7 +16,7 @@
         <div id="posts-container" class="flex flex-col mt-4 w-1/2 items-center gap-2 shadow-lg">
             {{#each posts as |post|}}
             <div class="bg-white shadow-md p-6 border border-1 border-vibes-medium-green w-full rounded-md">
-                <div id="postAuthor" class="text-blue-600 italic">
+                <div id="postAuthor" class="text-blue-600 italic cursor-pointer hover:text-blue-500">
                     @{{post.user.dataValues.username}}
                 </div>
                 <div class="border-2 border-vibes-medium-green rounded-md p-3">
@@ -26,6 +26,9 @@
                     <div id="content">
                         {{content}}
                     </div>
+                </div>
+                <div class="displayDateBox">
+                    {{created_at}}
                 </div>
             </div>
             {{/each}}
