@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Posts } = require('../models');
+const { Posts, Users } = require('../models');
 
 router.get('/signup', function (req, res, next) {
     res.render('signup.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
@@ -22,13 +22,14 @@ router.get('/posts', async function (req, res, next) {
     console.log("GETTING POSTS")
     let posts = await Posts.findAll({
         attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
+        include: [{
+            model: Users
+        }]
     })
-    // posts.forEach(p => {
-    //     console.log(p)
-    //     console.log(p.dataValues)
-    // })
+    console.log('first LOG----------------------')
+
     posts = posts.map(p => p.get({ plan: true }))
-    console.log(posts)
+    console.log(posts[0].user)
     res.render('posts.handlebars', { posts })
 });
 

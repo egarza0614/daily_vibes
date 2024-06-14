@@ -60,24 +60,6 @@ router.post('/', (req, res) => {
     })
 })
 
-router.get('/posts', async function (req, res, next) {
-  console.log("GETTING POSTS")
-  let posts = await Posts.findAll({
-    attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
-  })
-  posts.forEach(p => {
-    console.log(p)
-    console.log(p.dataValues)
-  })
-  posts = posts.map(p => {
-    return {
-      title: p.dataValues.title,
-      content: p.dataValues.content
-    }
-  })
-  res.render('posts.handlebars', { posts })
-});
-
 
 router.delete('/:id', (req, res) => {
   Posts.destroy({
