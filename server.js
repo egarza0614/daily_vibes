@@ -11,11 +11,14 @@ const PORT = process.env.PORT || 3002;
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 
+const hour = 360000
 app.use(session({
   secret: 'my secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: 'auto' }
+  cookie: { secure: 'auto',
+    expires: new Date(Date.now() + hour)
+   }
 }))
 
 // Handlebars Setup
