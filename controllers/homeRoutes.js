@@ -23,6 +23,7 @@ router.get('/posts', async function (req, res, next) {
     console.log("GETTING POSTS")
     let posts = await Posts.findAll({
         attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
+        order: [['created_at', 'DESC']],
         include: [{
             model: Users
         }]

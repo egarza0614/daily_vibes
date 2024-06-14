@@ -701,6 +701,10 @@ video {
   max-width: 32rem;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .flex-col {
   flex-direction: column;
 }
@@ -719,6 +723,14 @@ video {
 
 .justify-between {
   justify-content: space-between;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.justify-evenly {
+  justify-content: space-evenly;
 }
 
 .gap-2 {
@@ -839,6 +851,10 @@ video {
   padding-top: 1rem;
 }
 
+.pl-4 {
+  padding-left: 1rem;
+}
+
 .text-center {
   text-align: center;
 }
@@ -944,9 +960,39 @@ video {
   font-style: normal;
 }
 
+/* width */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+
+::-webkit-scrollbar-thumb {
+  background: #3E5D4F;
+  border-radius: .5rem;
+}
+
+/* Handle on hover */
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 .hover\:bg-vibes-medium-green:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(62 93 79 / var(--tw-bg-opacity));
+}
+
+.hover\:text-blue-500:hover {
+  --tw-text-opacity: 1;
+  color: rgb(59 130 246 / var(--tw-text-opacity));
 }
 
 .hover\:underline:hover {
