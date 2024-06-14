@@ -9,18 +9,17 @@
                 class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100">
             <input type="text" id="userInput" placeholder="Spill the tea"
                 class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100 pb-24">
-            <button
-                id="post-button" class="px-4 py-2 mt-3 border bg-vibes-light-green rounded-md w-1/4 text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green"
+            <button id="post-button"
+                class="px-4 py-2 mt-3 border bg-vibes-light-green rounded-md w-1/4 text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green"
                 onclick="createPost()">Post</button>
         </div>
     </div>
-    <div id="posts-container" class="mt-4">
+    <div id="posts-container" class="mt-4 grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
         {{#each posts}}
-        <div class="post">
-            <h2>{{title}}</h2>
-            <p>{{content}}</p>
+        <div class="bg-white rounded-lg shadow-md p-6">
+            {{title}}
+            {{content}}
+            {{/each}}
         </div>
-        {{/each}}
     </div>
-</div>
 </div>

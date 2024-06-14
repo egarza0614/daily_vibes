@@ -75,6 +75,7 @@ router.get('/posts', async function (req, res, next) {
       content: p.dataValues.content
     }
   })
+  res.render('posts.handlebars', { posts })
 });
 
 
