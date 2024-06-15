@@ -51,11 +51,11 @@ router.get('/profile/:username', function (req, res, next) {
             console.log(posts)
             res.render('profile.handlebars', {
                 posts,
-                username: posts[0].user.username,
-                created_at: new Date(posts[0].user.created_at).toLocaleString().split(', ')[0],
-                bio: posts[0].user.bio,
-                location: posts[0].user.location,
-                birthday: posts[0].user.birthday
+                username: posts[0]?.user?.username,
+                created_at: new Date(posts[0]?.user?.created_at).toLocaleString().split(', ')[0],
+                bio: posts[0]?.user?.bio,
+                location: posts[0]?.user?.location,
+                birthday: posts[0]?.user?.birthday
             });
 
         })
