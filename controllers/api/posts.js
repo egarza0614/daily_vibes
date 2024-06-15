@@ -36,6 +36,8 @@ router.get('/:id', async (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  console.log('LINE _-------------------------------------------------------')
+  console.log(req.session.user_id)
   console.log("test")
   const { title, content } = req.body
 
