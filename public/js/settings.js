@@ -84,9 +84,12 @@ function userLocation() {
 
     const updateButton1 = updateButton("location")
 
+    const alertDiv = document.createElement('div')
+    alertDiv.setAttribute("id", "alertDiv")
+
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
-    whiteBox.append(locationHeader, locationInput, buttonBox)
+    whiteBox.append(locationHeader, locationInput, alertDiv, buttonBox)
     blurBox.append(whiteBox)
 }
 
@@ -113,9 +116,12 @@ function userBirthday() {
     const cancelButton1 = cancelButton()
     const updateButton1 = updateButton("birthday")
 
+    const alertDiv = document.createElement('div')
+    alertDiv.setAttribute("id", "alertDiv")
+
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
-    whiteBox.append(birthdayHeader, birthdayInput, buttonBox)
+    whiteBox.append(birthdayHeader, birthdayInput, alertDiv, buttonBox)
     blurBox.append(whiteBox)
 }
 
@@ -141,15 +147,19 @@ function userBio() {
 
     const updateButton1 = updateButton("bio")
 
+    const alertDiv = document.createElement('div')
+    alertDiv.setAttribute("id", "alertDiv")
+
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
-    whiteBox.append(bioHeader, bioInput, buttonBox)
+    whiteBox.append(bioHeader, bioInput, alertDiv, buttonBox)
     blurBox.append(whiteBox)
 }
 
 function popupBackground() {
     const whiteBox = document.createElement('div')
     whiteBox.setAttribute('class', 'bg-white p-8 rounded-md')
+    whiteBox.setAttribute('id', "whiteBox")
     return whiteBox
 }
 
@@ -208,5 +218,13 @@ async function updateUser(type) {
             'Content-Type': 'application/json'
         },
     })
-    console.log('here!!!!!!!!!!')
+    if (!response.ok) {
+        const alertDiv = document.getElementById('alertDiv')
+        const error = document.createElement('p')
+        error.innerHTML = "Something went wrong!"
+        error.setAttribute('class', 'text-center text-vibes-alert-red font-bold pb-2')
+        alertDiv.appendChild(error)
+        return
+    }
+    clearModal()
 }
