@@ -43,7 +43,7 @@ router.get('/profile/:username', function (req, res, next) {
             where: {
                 username: req.params.username
             },
-            attributes: ['id', 'username', 'created_at']
+            attributes: ['id', 'username', 'created_at', 'bio', 'location', 'birthday']
         }]
     })
         .then((posts) => {
@@ -53,6 +53,9 @@ router.get('/profile/:username', function (req, res, next) {
                 posts,
                 username: posts[0].user.username,
                 created_at: new Date(posts[0].user.created_at).toLocaleString().split(', ')[0],
+                bio: posts[0].user.bio,
+                location: posts[0].user.location,
+                birthday: posts[0].user.birthday
             });
 
         })
