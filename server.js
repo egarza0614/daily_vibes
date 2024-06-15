@@ -2,7 +2,6 @@ const express = require('express');
 const session = require('express-session');
 const exphbs = require('express-handlebars');
 const path = require('path');
-const helpers = require('./utils/helpers')
 require('dotenv').config();
 
 const app = express();
@@ -27,8 +26,7 @@ const hbs = exphbs.create({
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, './views/layouts'),
   partialsDir: path.join(__dirname, './views/partials'),
-  helpers: path.join(__dirname, './utils/helpers')
-}, { helpers });
+});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');

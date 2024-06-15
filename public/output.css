@@ -661,6 +661,10 @@ video {
   height: 50%;
 }
 
+.h-\[85\%\] {
+  height: 85%;
+}
+
 .h-\[90\%\] {
   height: 90%;
 }
@@ -671,6 +675,10 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[84\%\] {
+  height: 84%;
 }
 
 .w-1\/2 {
@@ -849,10 +857,6 @@ video {
 
 .pt-4 {
   padding-top: 1rem;
-}
-
-.pl-4 {
-  padding-left: 1rem;
 }
 
 .text-center {
