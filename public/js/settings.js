@@ -81,6 +81,7 @@ function userLocation() {
     buttonBox.setAttribute('class', 'flex justify-end')
 
     const cancelButton1 = cancelButton()
+
     const updateButton1 = updateButton("location")
 
     mainBody.appendChild(blurBox)
@@ -124,7 +125,6 @@ function userBio() {
     blurBox.setAttribute('class', 'absolute fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50')
     blurBox.setAttribute('id', 'blurBox')
 
-
     const whiteBox = popupBackground()
 
     const bioHeader = popupHeader("Tell us about yourself.")
@@ -134,11 +134,11 @@ function userBio() {
     bioInput.setAttribute('class', "w-full p-2 border border-vibes-light-green rounded-md mb-4")
 
 
-
     const buttonBox = document.createElement('div')
     buttonBox.setAttribute('class', 'flex justify-end')
 
     const cancelButton1 = cancelButton()
+
     const updateButton1 = updateButton("bio")
 
     mainBody.appendChild(blurBox)
