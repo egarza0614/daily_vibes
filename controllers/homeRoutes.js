@@ -19,8 +19,15 @@ router.get('/profile', function (req, res, next) {
 });
 
 router.get('/posts', async function (req, res, next) {
-    res.render('posts.handlebars', { title: 'Posts', Posts })
+    console.log("GETTING POSTS")
+    let posts = await Posts.findAll({
+        attributes: ['id', 'title', 'content', 'user_id', 'created_at'],
+    })
+    posts = posts.map(p => p.get({ plan: true }))
+    console.log(posts)
+    res.render('posts.handlebars', { posts })
 });
+
 
 router.get('/settings', function (req, res, next) {
     res.render('settings.handlebars', { title: 'Update Settings' })
