@@ -11,11 +11,14 @@ const PORT = process.env.PORT || 3002;
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 
+const hour = 360000
 app.use(session({
   secret: 'my secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: 'auto' }
+  cookie: { secure: 'auto',
+    expires: new Date(Date.now() + hour)
+   }
 }))
 
 // Handlebars Setup
@@ -23,7 +26,6 @@ const hbs = exphbs.create({
   defaultLayout: 'main',
   layoutsDir: path.join(__dirname, './views/layouts'),
   partialsDir: path.join(__dirname, './views/partials'),
-  helpers: path.join(__dirname, './utils/helpers')
 });
 
 app.engine('handlebars', hbs.engine);
@@ -34,6 +36,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //app.use(express.static(__dirname + 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+const filterBadWords = require('./middleware/badwords');
+app.use(filterBadWords);
+// const filterbadwords = require('bad-words');
 
 //Routes
 const controllers = require('./controllers');

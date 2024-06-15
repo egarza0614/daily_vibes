@@ -88,4 +88,6 @@ async function createPost() {
   } catch (error) {
     console.error(error);
   }
+  window.location.reload()
+  // temp fix to re-rendering
 };
