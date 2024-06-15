@@ -27,6 +27,18 @@ Users.init(
         notEmpty: true
       }
     },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    birthday: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    location: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     sequelize,
