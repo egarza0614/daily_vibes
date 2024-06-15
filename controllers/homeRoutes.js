@@ -48,10 +48,10 @@ router.get('/:username', function (req, res, next) {
         }]
     })
         .then((result) => {
-            console.log(result)
+            console.log(result[0].dataValues)
             res.render('profile.handlebars', {
-                user: result[0]?.dataValues.user,
-                created_at: new Date(result[0]?.dataValues.user.created_at).toLocaleString().split(', ')[0]
+                username: result[0].dataValues.user.dataValues.username,
+                created_at: new Date(result[0].dataValues.user.dataValues.created_at).toLocaleString().split(', ')[0]
             });
         })
         .catch((err) => {
