@@ -1,35 +1,33 @@
 {{>mainHeader}}
-<div class="h-full flex justify-center items-center" id="mainBox">
-    <div class="w-full max-w-lg h-full flex flex-col gap-4 justify-center items-center">
-        <h1 class="text-center font-spicy-rice-regular text-6xl text-vibes-dark-green flex items-center">
+
+<div class="mt-20 flex justify-center items-center" id="mainBox">
+    <div class="flex flex-col items-center h-[600px] justify-around w-90 bg-white rounded-md border-2 border-solid border-vibes-light-green shadow-2xl p-8"
+        id="settingsBox">
+        <h1 class="text-center font-spicy-rice-regular text-4xl text-vibes-dark-green flex items-center">
             Settings
         </h1>
-        <div
-            class="flex flex-col items-center bg-white rounded-md border-2 border-solid border-vibes-light-green shadow-2xl p-8">
-            <div class="mb-4 flex items-center">
-                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your Profile Picture</p>
-                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
-                <button
-                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
-                    Update Profile
-                </button>
-            </div>
-            <div class="mb-4 flex items-center">
-                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your password</p>
-                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
-                <button id="updatePasswordButton" onclick="updatePassword()"
-                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
-                    Update Password
-                </button>
-            </div>
-            <div class="mb-4 flex items-center">
-                <p class="text-vibes-medium-green font-bold text-2xl mr-4">Click here to update your username</p>
-                <span role="img" aria-label="arrow hand emoji" class="text-vibes-medium-green text-xl">👉</span>
-                <button id="updateUsernameButton" onclick="updateUsername()"
-                    class="ml-4 px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green">
-                    Update Username
-                </button>
-            </div>
-        </div>
+        <img src="/assets/pfpPlaceholder.jpg" alt="profile picture"
+            class="w-1/2 border-2 border-vibes-medium-green rounded-full">
+        <button id="bioButton" onclick="userBio()"
+            class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green w-full">
+            Bio
+        </button>
+        <button id="birthdayButton" onclick="userBirthday()"
+            class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green w-full">
+            Birthday
+        </button>
+        <button id="locationButton" onclick="userLocation()"
+            class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green w-full">
+            Location
+        </button>
+        <button id="updatePasswordButton" onclick="updatePassword()"
+            class="px-4 py-2 border bg-vibes-light-green  rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green w-full">
+            Update Password
+        </button>
+        <button id="updateUsernameButton" onclick="updateUsername()"
+            class="px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green w-full">
+            Update Username
+        </button>
     </div>
+
 </div>

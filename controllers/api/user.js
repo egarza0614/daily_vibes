@@ -1,11 +1,11 @@
 const router = require('express').Router()
 const { Users } = require('../../models')
-const bcrypt = require('bcrypt'); // Import bcrypt for password hashing
+const { Posts } = require('../../models');
 
 // find all users
 router.get('/', (req, res) => {
     Users.findAll({
-        attributes: ['id', 'username', 'password']
+        attributes: ['id', 'username', 'email', 'password', 'created_at']
     })
         .then((result) => {
             return res.status(200).json(result)
@@ -18,6 +18,26 @@ router.get('/', (req, res) => {
         })
 })
 
+router.get('/:username/posts', (req, res) => {
+    Posts.findAll({
+        include: [{
+            model: Users,
+            where: {
+                username: req.params.username
+            },
+            attributes: ['id', 'username']
+        }]
+    })
+        .then((result) => {
+            console.log(result)
+            return res.status(200).json(result)
+        })
+        .catch((err) => {
+            console.error(err)
+            return res.status(400).json({ message: 'Could not fetch posts' })
+        }
+        )
+})
 // find user by username
 router.get('/:username', (req, res) => {
     Users.findAll({
