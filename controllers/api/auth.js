@@ -31,7 +31,9 @@ router.post('/login', async (req, res) => {
 
     // here the user id is being set
     req.session.user_id = foundUser.id
+    req.session.username = foundUser.username
     req.session.authorized = true
+    // res.redirect(`/${foundUser.username}/profile`);
     res.status(200).json({ success: 'Logged in' })
 
   } catch (err) {

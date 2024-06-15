@@ -80,6 +80,5 @@ router.delete('/:id', (req, res) => {
     })
 })
 
-// c
 
 module.exports = router;

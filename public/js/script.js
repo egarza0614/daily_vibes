@@ -16,7 +16,7 @@ async function handleLogin() {
         console.log(res)
         const json = await res.json()
         if (json.success) {
-          window.location.href = '/posts'
+          window.location.href = '/profile'
         }
       })
   } catch (e) {

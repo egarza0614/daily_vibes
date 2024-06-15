@@ -16,7 +16,7 @@ router.get('/', function (req, res, next) {
 });
 
 router.get('/profile', function (req, res, next) {
-    res.render('profile.handlebars', { title: 'dailyvibes' });
+    res.render('profile.handlebars', { title: 'dailyvibes', username: 'username' });
 });
 
 router.get('/posts', async function (req, res, next) {
