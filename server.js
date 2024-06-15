@@ -16,9 +16,10 @@ app.use(session({
   secret: 'my secret',
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: 'auto',
+  cookie: {
+    secure: 'auto',
     expires: new Date(Date.now() + hour)
-   }
+  }
 }))
 
 // Handlebars Setup
