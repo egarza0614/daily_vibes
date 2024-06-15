@@ -100,5 +100,26 @@ router.put('/updatePassword', (req, res) => {
         })
 })
 
+router.put('/', (req, res) => {
+    const { bio, location, birthday } = req.body;
+    Users.update({
+        bio: bio,
+        location: location,
+        birthday: birthday,
+    },
+        {
+            where: {
+                id: req.session.user_id
+            }
+        }
+    )
+        .then(() => {
+            return res.status(200).json({ success: "bio updated successfully!" })
+        })
+        .catch((err) => {
+            console.error(err)
+            return res.status(400).json({ error: "Unable to update bio." })
+        })
+})
 
 module.exports = router

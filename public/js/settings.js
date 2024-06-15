@@ -74,13 +74,14 @@ function userLocation() {
     const locationInput = document.createElement('input')
     locationInput.setAttribute('class', "w-full p-2 border border-vibes-light-green rounded-md mb-4")
     locationInput.placeholder = "City, State"
+    locationInput.setAttribute('id', "userLocationInput")
 
 
     const buttonBox = document.createElement('div')
     buttonBox.setAttribute('class', 'flex justify-end')
 
     const cancelButton1 = cancelButton()
-    const updateButton1 = updateButton()
+    const updateButton1 = updateButton("location")
 
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
@@ -101,6 +102,7 @@ function userBirthday() {
 
     const birthdayInput = document.createElement('input')
     birthdayInput.setAttribute('class', "w-full p-2 border border-vibes-light-green rounded-md mb-4")
+    birthdayInput.setAttribute('id', "userBirthdayInput")
     birthdayInput.placeholder = "MM-DD-YY"
 
 
@@ -108,7 +110,7 @@ function userBirthday() {
     buttonBox.setAttribute('class', 'flex justify-end')
 
     const cancelButton1 = cancelButton()
-    const updateButton1 = updateButton()
+    const updateButton1 = updateButton("birthday")
 
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
@@ -125,10 +127,11 @@ function userBio() {
 
     const whiteBox = popupBackground()
 
-    const BioHeader = popupHeader("Tell us about yourself.")
+    const bioHeader = popupHeader("Tell us about yourself.")
 
-    const BioInput = document.createElement('input')
-    BioInput.setAttribute('class', "w-full p-2 border border-vibes-light-green rounded-md mb-4")
+    const bioInput = document.createElement('input')
+    bioInput.setAttribute('id', "userBioInput")
+    bioInput.setAttribute('class', "w-full p-2 border border-vibes-light-green rounded-md mb-4")
 
 
 
@@ -136,11 +139,11 @@ function userBio() {
     buttonBox.setAttribute('class', 'flex justify-end')
 
     const cancelButton1 = cancelButton()
-    const updateButton1 = updateButton()
+    const updateButton1 = updateButton("bio")
 
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
-    whiteBox.append(BioHeader, BioInput, buttonBox)
+    whiteBox.append(bioHeader, bioInput, buttonBox)
     blurBox.append(whiteBox)
 }
 
@@ -163,9 +166,10 @@ function clearModal() {
     blurBox.remove()
 }
 
-function updateButton() {
+function updateButton(type) {
     const button = document.createElement('button')
     button.innerHTML = "Update"
+    button.setAttribute(`onclick`, `updateUser("${type}")`)
     button.setAttribute('class', 'px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green')
     return button
 }
@@ -176,4 +180,33 @@ function popupHeader(headerText) {
     header.innerHTML = headerText
     header.setAttribute('class', 'text-2xl font-bold text-vibes-dark-green mb-4')
     return header
+}
+
+
+async function updateUser(type) {
+    let formData
+    if (type === "bio") {
+        formData = {
+            bio: document.getElementById("userBioInput").value
+        }
+    }
+    if (type === "location") {
+        formData = {
+            location: document.getElementById("userLocationInput").value
+        }
+        console.log(formData.location)
+    }
+    if (type === "birthday") {
+        formData = {
+            birthday: document.getElementById("userBirthdayInput").value
+        }
+    }
+    const response = await fetch('/api/users/', {
+        method: "PUT",
+        body: JSON.stringify(formData),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+    })
+    console.log('here!!!!!!!!!!')
 }
