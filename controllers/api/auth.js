@@ -11,7 +11,7 @@ router.post('/login', async (req, res) => {
   console.log("Username", username, "Password", password)
   try {
     const foundUser = await Users.findOne({
-      attributes: ['id', 'username', 'password'],
+      attributes: ['id', 'username', 'password', 'created_at'],
       where: {
         username: username
       }
@@ -30,6 +30,7 @@ router.post('/login', async (req, res) => {
     console.log(foundUser.id)
 
     // here the user id is being set
+    req.session.user = foundUser
     req.session.user_id = foundUser.id
     req.session.authorized = true
     res.status(200).json({ success: 'Logged in' })
