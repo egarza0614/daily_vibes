@@ -38,7 +38,7 @@ router.get('/settings', function (req, res, next) {
 })
 
 router.get('/:username', function (req, res, next) {
-    Posts.findAll({
+    const userPosts = Posts.findAll({
         include: [{
             model: Users,
             where: {
@@ -48,11 +48,14 @@ router.get('/:username', function (req, res, next) {
         }]
     })
         .then((result) => {
-            console.log(result[0].dataValues)
+
+            console.log(result.map((element) => element.dataValues.title).join())
             res.render('profile.handlebars', {
                 username: result[0].dataValues.user.dataValues.username,
-                created_at: new Date(result[0].dataValues.user.dataValues.created_at).toLocaleString().split(', ')[0]
+                created_at: new Date(result[0].dataValues.user.dataValues.created_at).toLocaleString().split(', ')[0],
+                title: result.map((element) => element.dataValues.title).join()
             });
+
         })
         .catch((err) => {
             console.error(err)
