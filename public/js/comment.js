@@ -22,3 +22,5 @@ async function submitComment() {
     // window.location.reload()
     // temp fix to re-rendering
   };
+
+  
