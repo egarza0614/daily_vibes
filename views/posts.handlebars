@@ -27,15 +27,22 @@
             <div class="flex justify-between items-center mt-1">
                 <div class="flex items-center w-1/2 gap-4">
                     <i class="fa-regular fa-heart cursor-pointer text-vibes-medium-green text-2xl"></i>
-                    <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
-                    <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
+                    <button onclick="submitComment()">
+                        <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
+                        </button>
+                        <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
                 </div>
                 <div class="displayDateBox flex justify-end w-1/2">
                     {{created_at}}
                 </div>
+                {{!-- <input id="comment" data-postId="{{id}}" type="text" />
+                {{!-- <button onclick="submitComment()">submit</button> --}}
             </div>
+            {{#each post.comments as |comment|}}
+
+            {{/each}}
         </div>
         {{/each}}
-    </div>
+    </div> --}}
 </div>
 </div>

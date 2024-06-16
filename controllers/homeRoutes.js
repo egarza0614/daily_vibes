@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Posts, Users } = require('../models');
+const { Posts, Users, Comments } = require('../models');
 
 
 router.get('/signup', function (req, res, next) {
@@ -26,9 +26,21 @@ router.get('/posts', async function (req, res, next) {
         }]
     })
     console.log('first LOG----------------------')
-
-    posts = posts.map(p => p.get({ plain: true }))
-    res.render('posts.handlebars', { posts, username: req.session?.user?.username })
+    posts = posts.map(p => {
+        return p.get({ plain: true })
+    })
+    for (const post of posts) {
+       let comments = await Comments.findAll({
+           where: { post_id: post.id },
+           attributes: ['user_id', 'post_id', 'comment_text'],
+        })
+        comments = comments.map((c => c.get({ plain: true })))
+        post.comments = comments
+    }
+    
+    res.render('posts.handlebars', { posts, username: req.session?.user?.username,
+        
+     })
 });
 
 

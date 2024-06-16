@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@tailwind autoprefixer;
 
 .font-spicy-rice-regular {
     font-family: "Spicy Rice", serif;
