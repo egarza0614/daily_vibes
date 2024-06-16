@@ -85,20 +85,35 @@ router.post('/signup', (req, res) => {
     }
 })
 
-router.put('/updatePassword', (req, res) => {
-    const { password } = req.body;
-    Users.update({
-        password: password,
-        user_id: req.session.user_id
-    })
-        .then(() => {
-            return res.status(200).json({ success: "Password updated successfully!" })
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.status(400).json({ error: "Unable to update password." })
-        })
-})
+// password update
+router.put('/updatePassword', async (req, res) => {
+    console.log("Received PUT request to /users/updatePassword");
+    console.log("Request Body:", req.body);
+    console.log("User ID from session:", req.session.user_id); // Check if user_id is available
+
+    try {
+        const { newPassword } = req.body; // Get the new password from the request body
+        const userId = req.session.user_id;
+
+        const user = await Users.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        // Hash the new password
+        // const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds (you can adjust)
+
+        // Update the password in the database
+        await user.update({ password: newPassword });
+
+        // Indicate success
+        return res.status(200).json({ success: "Password updated successfully!" });
+    } catch (err) {
+        console.error('Error updating password:', err); // Log the error on the server
+        return res.status(500).json({ error: "Unable to update password." });
+    }
+});
 
 router.put('/', (req, res) => {
     const { bio, location, birthday } = req.body;
@@ -121,5 +136,39 @@ router.put('/', (req, res) => {
             return res.status(400).json({ error: "Unable to update bio." })
         })
 })
+
+// update username
+router.put('/username', async (req, res) => {
+    console.log("Received PUT request to /users/username");
+    console.log("Request Body:", req.body);
+    console.log("User ID from session:", req.session.user_id);
+
+    try {
+        const { newUsername } = req.body;
+        const userId = req.session.user_id;
+
+        const user = await Users.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        // Check if the new username is already taken
+        const existingUser = await Users.findOne({ where: { username: newUsername } });
+        if (existingUser) {
+            return res.status(409).json({ error: "Username already taken." });
+        }
+
+        await user.update({ username: newUsername });
+
+        // Update the session with the new username
+        req.session.username = newUsername;
+
+        return res.status(200).json({ success: "Username updated successfully!" });
+    } catch (err) {
+        console.error('Error updating username:', err);
+        return res.status(500).json({ error: "Unable to update username." });
+    }
+});
 
 module.exports = router

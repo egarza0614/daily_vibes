@@ -1,6 +1,26 @@
+function popupHeader(headerText) {
+    const header = document.createElement('p')
+    console.log(headerText)
+    header.innerHTML = headerText
+    header.setAttribute('class', 'text-2xl font-bold text-vibes-dark-green mb-4')
+    return header
+}
 
+function popupBackground() {
+    const whiteBox = document.createElement('div')
+    whiteBox.setAttribute('class', 'bg-white p-8 rounded-md')
+    return whiteBox
+}
 
-function updateUsername() {
+function cancelButton() {
+    const button = document.createElement('button')
+    button.innerHTML = "Cancel"
+    button.setAttribute('class', 'px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green mr-2')
+    button.setAttribute('onClick', "clearModal()")
+    return button
+}
+
+async function updateUsername() {
     const mainBody = document.getElementById('mainBody')
     const blurBox = document.createElement('div')
     blurBox.setAttribute('class', 'absolute fixed top-0 left-0 flex items-center justify-center w-full h-full bg-gray-900 bg-opacity-50')
@@ -19,6 +39,28 @@ function updateUsername() {
 
     const cancelButton1 = cancelButton()
     const updateButton1 = updateButton()
+
+    // Modified updateButton1 function to use sendUpdateRequest
+    updateButton1.addEventListener('click', async () => {
+        const newUsername = usernameInput.value.trim();
+
+        if (!newUsername) {
+            alert("Please enter a new username.");
+            return;
+        }
+
+        try {
+            const response = await sendUpdateRequest('/api/users/username', { newUsername });
+            if (response.success) {
+                alert(data.success);
+                //clearModal();
+            } else {
+                alert(response.error || 'Failed to update username.');
+            }
+        } catch (err) {
+            alert(err.message); // Display the error message from sendUpdateRequest
+        }
+    });
 
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
@@ -53,6 +95,24 @@ function updatePassword() {
 
     const cancelButton1 = cancelButton()
     const updateButton1 = updateButton()
+
+    updateButton1.addEventListener('click', async () => {
+        const newPassword = passwordInput.value;
+        const confirmPassword = passwordInputConfirm.value;
+     
+        if (newPassword !== confirmPassword) {
+            alert("Passwords do not match.");
+            return;
+        }
+
+        try {
+            const data = await sendPasswordUpdate(newPassword);
+            alert(data.success);
+            clearModal();
+        } catch (error) {
+            alert(error.message);
+        }
+    });
 
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
@@ -181,17 +241,49 @@ function updateButton(type) {
     button.innerHTML = "Update"
     button.setAttribute(`onclick`, `updateUser("${type}")`)
     button.setAttribute('class', 'px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green')
-    return button
+    return button;
 }
 
-function popupHeader(headerText) {
-    const header = document.createElement('p')
-    console.log(headerText)
-    header.innerHTML = headerText
-    header.setAttribute('class', 'text-2xl font-bold text-vibes-dark-green mb-4')
-    return header
+async function sendPasswordUpdate(newPassword) {
+    try {
+        const response = await fetch('/api/users/updatePassword', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            // Assuming you're using sessions, you might want to include credentials here
+            credentials: 'include', 
+            body: JSON.stringify({ newPassword })
+        });
+
+        if (response.ok) {
+            const data = await response.json();
+            return data; 
+        } else {
+            throw new Error("Failed to update password");
+        }
+    } catch (error) {
+        console.error(error);
+        throw new Error("An error occurred while updating the password.");
+    }
 }
 
+async function sendUpdateRequest(endpoint, data) {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error("Failed to update. Server error.");
+        }
+    } catch (err) {
+        console.error(`Error updating ${endpoint}:`, err);
+        throw new Error("An error occurred while updating."); 
+    }
+}
 
 async function updateUser(type) {
     let formData
