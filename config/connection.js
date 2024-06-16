@@ -1,20 +1,15 @@
 const Sequelize = require('sequelize');
 require('dotenv').config();
 
-const sequelize = new Sequelize(
+const sequelize = process.env.DB_URL
+  ? new Sequelize(process.env.DB_URL)
+  : new Sequelize(
+    process.env.DB_NAME,
+    process.env.DB_USER,
+    process.env.DB_PASSWORD,
     {
       host: 'localhost',
-      database: process.env.DB_NAME ?? 'dailyvibes_db',
-      username: process.env.DB_USER ?? 'postgres',
-      password: process.env.DB_PASSWORD ?? 'password',
-      port: 5432,
       dialect: 'postgres',
-       dialectOptions: {
-      //  ssl: {
-      //   require: false,
-      //   rejectUnauthorized: false 
-      //  }
-      }
     }
   );
 
