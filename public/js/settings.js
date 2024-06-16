@@ -40,6 +40,28 @@ async function updateUsername() {
     const cancelButton1 = cancelButton()
     const updateButton1 = updateButton()
 
+    // Modified updateButton1 function to use sendUpdateRequest
+    updateButton1.addEventListener('click', async () => {
+        const newUsername = usernameInput.value.trim();
+
+        if (!newUsername) {
+            alert("Please enter a new username.");
+            return;
+        }
+
+        try {
+            const response = await sendUpdateRequest('/api/users/username', { newUsername });
+            if (response.success) {
+                alert('Username updated successfully!');
+                clearModal();
+            } else {
+                alert(response.error || 'Failed to update username.');
+            }
+        } catch (err) {
+            alert(err.message); // Display the error message from sendUpdateRequest
+        }
+    });
+
     mainBody.appendChild(blurBox)
     buttonBox.append(cancelButton1, updateButton1)
     whiteBox.append(usernameHeader, usernameInput, buttonBox)
@@ -87,7 +109,6 @@ function updatePassword() {
             const data = await sendPasswordUpdate(newPassword);
             alert(data.success);
             blurBox.remove();
-            clearModal();
         } catch (error) {
             alert(error.message);
         }
@@ -220,10 +241,7 @@ function updateButton(type) {
     button.innerHTML = "Update"
     button.setAttribute(`onclick`, `updateUser("${type}")`)
     button.setAttribute('class', 'px-4 py-2 border bg-vibes-light-green rounded-md text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green')
-    button.addEventListener('click', async () => {
-        updatePassword(); 
-    });
-    return button
+    return button;
 }
 
 async function sendPasswordUpdate(newPassword) {
@@ -246,8 +264,27 @@ async function sendPasswordUpdate(newPassword) {
         console.error(error);
         throw new Error("An error occurred while updating the password.");
     }
+    clearModal()
 }
 
+async function sendUpdateRequest(endpoint, data) {
+    try {
+        const response = await fetch(endpoint, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data),
+        });
+
+        if (response.ok) {
+            return await response.json();
+        } else {
+            throw new Error("Failed to update. Server error.");
+        }
+    } catch (err) {
+        console.error(`Error updating ${endpoint}:`, err);
+        throw new Error("An error occurred while updating."); 
+    }
+}
 
 async function updateUser(type) {
     let formData

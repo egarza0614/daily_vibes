@@ -137,4 +137,38 @@ router.put('/', (req, res) => {
         })
 })
 
+// update username
+router.put('/username', async (req, res) => {
+    console.log("Received PUT request to /users/username");
+    console.log("Request Body:", req.body);
+    console.log("User ID from session:", req.session.user_id);
+
+    try {
+        const { newUsername } = req.body;
+        const userId = req.session.user_id;
+
+        const user = await Users.findByPk(userId);
+
+        if (!user) {
+            return res.status(404).json({ error: "User not found." });
+        }
+
+        // Check if the new username is already taken
+        const existingUser = await Users.findOne({ where: { username: newUsername } });
+        if (existingUser) {
+            return res.status(409).json({ error: "Username already taken." });
+        }
+
+        await user.update({ username: newUsername });
+
+        // Update the session with the new username
+        req.session.username = newUsername;
+
+        return res.status(200).json({ success: "Username updated successfully!" });
+    } catch (err) {
+        console.error('Error updating username:', err);
+        return res.status(500).json({ error: "Unable to update username." });
+    }
+});
+
 module.exports = router
