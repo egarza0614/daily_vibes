@@ -1,13 +1,4 @@
 
-async function reRenderPosts() {
-    const response = await fetch('/posts', {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json'
-        },
-    }
-    )
-}
 async function displayDate() {
     const postedDates = document.getElementsByClassName('displayDateBox')
     for (let i = 0; i < postedDates.length; i++) {

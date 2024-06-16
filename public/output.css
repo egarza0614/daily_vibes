@@ -1085,3 +1085,25 @@ video {
   --tw-bg-opacity: 1;
   background-color: rgb(52 79 67 / var(--tw-bg-opacity));
 }
+
+@media (min-width: 640px) {
+  .sm\:h-60 {
+    height: 15rem;
+  }
+
+  .sm\:w-60 {
+    width: 15rem;
+  }
+
+  .sm\:w-96 {
+    width: 24rem;
+  }
+
+  .sm\:w-40 {
+    width: 10rem;
+  }
+
+  .sm\:w-1\/2 {
+    width: 50%;
+  }
+}
