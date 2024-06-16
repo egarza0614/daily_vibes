@@ -52,8 +52,8 @@ async function updateUsername() {
         try {
             const response = await sendUpdateRequest('/api/users/username', { newUsername });
             if (response.success) {
-                alert('Username updated successfully!');
-                clearModal();
+                alert(data.success);
+                //clearModal();
             } else {
                 alert(response.error || 'Failed to update username.');
             }
@@ -108,7 +108,7 @@ function updatePassword() {
         try {
             const data = await sendPasswordUpdate(newPassword);
             alert(data.success);
-            blurBox.remove();
+            clearModal();
         } catch (error) {
             alert(error.message);
         }
@@ -264,7 +264,6 @@ async function sendPasswordUpdate(newPassword) {
         console.error(error);
         throw new Error("An error occurred while updating the password.");
     }
-    clearModal()
 }
 
 async function sendUpdateRequest(endpoint, data) {
