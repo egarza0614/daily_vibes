@@ -1,13 +1,28 @@
 {{>mainHeader}}
 
-
-{{{username}}}
-{{{created_at}}}
-{{{bio}}}
-{{{location}}}
-{{{birthday}}}
-
 <div class="h-[90%] flex items-center flex-col pt-4 overflow-auto">
+  <div
+    class="w-[40%] flex justify-center items-center bg-white border border-vibes-light-green rounded-md shadow-2xl flex-col pt-2 px-7 pb-4 gap-4">
+    <div id="usname" class="text-2xl underline underline-offset-2 text-vibes-medium-green">
+      {{{username}}}
+    </div>
+    <div id="biography">
+      {{{bio}}}
+    </div>
+    <div class="flex gap-4">
+      <div id="loc">
+        <i class="fa-solid fa-location-dot pr-2 text-vibes-dark-green"></i>{{{location}}}
+      </div>
+      <div id="bday">
+        <i class="fa-solid fa-cake-candles pr-2 text-vibes-dark-green"></i>{{{birthday}}}
+      </div>
+      <div id="accountCreation">
+        <i class="fa-solid fa-calendar-days pr-2 text-vibes-dark-green"></i>Joined {{{created_at}}}
+      </div>
+    </div>
+
+  </div>
+
   <div id="posts-container" class="flex flex-col mt-4 w-1/2 items-center gap-2 shadow-lg">
     {{#each posts as |post|}}
     <div class="bg-white shadow-md p-6 border border-1 border-vibes-medium-green w-full rounded-md">
