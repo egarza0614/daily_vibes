@@ -23,6 +23,7 @@
                 <div id="content">
                     {{content}}
                 </div>
+                
             </div>
             <div class="flex justify-between items-center mt-1">
                 <div class="flex items-center w-1/2 gap-4">
@@ -35,7 +36,7 @@
                 <div class="displayDateBox flex justify-end w-1/2">
                     {{created_at}}
                 </div>
-                {{!-- <input id="comment" data-postId="{{id}}" type="text" />
+                <input id="comment" data-postId="{{id}}" type="text" />
                 {{!-- <button onclick="submitComment()">submit</button> --}}
             </div>
             {{#each post.comments as |comment|}}
@@ -43,6 +44,30 @@
             {{/each}}
         </div>
         {{/each}}
+    </div> 
+</div>
+</div>
+ 
+
+{{!-- 
+
+   <div class="mt-2">
+        {{#each post.comments as |comment|}}
+        <div class="bg-white shadow-md border border-1 border-vibes-medium-green rounded-md p-2 mt-2">
+            {{#each post.comments as |comment|}}
+            <div class="text-blue-600 italic">
+                @{{comment.username}}
+            </div>
+            <div class="text-gray-700">
+                {{comment.content}}
+            </div>
+        </div>
+        {{/each}}
+
+        <div class="mt-2">
+            <input id="comment" data-postId="{{id}}" type="text"
+                class="border-2 border-vibes-medium-green rounded-md p-2 w-full" placeholder="Add a comment..." />
+            <button onclick="submitComment()"
+                class="bg-vibes-medium-green text-white px-3 py-1 rounded-md ml-2">Submit</button>
+        </div>
     </div> --}}
-</div>
-</div>
