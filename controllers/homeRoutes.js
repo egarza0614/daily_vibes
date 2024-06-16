@@ -45,7 +45,12 @@ router.get('/posts', async function (req, res, next) {
 
 
 router.get('/settings', function (req, res, next) {
-    res.render('settings.handlebars', { title: 'Update Settings' })
+    if (!req.session.user_id) {
+        res.render('login.handlebars', { title: 'hello' });
+        return
+    } else {
+        res.render('settings.handlebars', { title: 'Update Settings' })
+    }
 })
 
 router.get('/profile/:username', function (req, res, next) {
