@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { Posts, Users } = require('../models');
+const { Posts, Users, Comments } = require('../models');
 
 
 router.get('/signup', function (req, res, next) {
@@ -26,34 +26,53 @@ router.get('/posts', async function (req, res, next) {
         }]
     })
     console.log('first LOG----------------------')
-
-    posts = posts.map(p => p.get({ plan: true }))
-    console.log(posts[0].user)
-    res.render('posts.handlebars', { posts, username: req.session?.user?.username })
+    posts = posts.map(p => {
+        return p.get({ plain: true })
+    })
+    for (const post of posts) {
+       let comments = await Comments.findAll({
+           where: { post_id: post.id },
+           attributes: ['user_id', 'post_id', 'comment_text'],
+        })
+        comments = comments.map((c => c.get({ plain: true })))
+        post.comments = comments
+    }
+    
+    res.render('posts.handlebars', { posts, username: req.session?.user?.username,
+        
+     })
 });
 
 
 router.get('/settings', function (req, res, next) {
-    res.render('settings.handlebars', { title: 'Update Settings' })
+    if (!req.session.user_id) {
+        res.render('login.handlebars', { title: 'hello' });
+        return
+    } else {
+        res.render('settings.handlebars', { title: 'Update Settings' })
+    }
 })
 
-router.get('/:username', function (req, res, next) {
+router.get('/profile/:username', function (req, res, next) {
     const userPosts = Posts.findAll({
         include: [{
             model: Users,
             where: {
                 username: req.params.username
             },
-            attributes: ['id', 'username', 'created_at']
+            attributes: ['id', 'username', 'created_at', 'bio', 'location', 'birthday']
         }]
     })
-        .then((result) => {
-
-            console.log(result.map((element) => element.dataValues.title).join())
+        .then((posts) => {
+            posts = posts.map((post) => post.get({ plain: true }))
+            console.log(posts)
             res.render('profile.handlebars', {
-                username: result[0].dataValues.user.dataValues.username,
-                created_at: new Date(result[0].dataValues.user.dataValues.created_at).toLocaleString().split(', ')[0],
-                title: result.map((element) => element.dataValues.title).join()
+                posts,
+                username: posts[0]?.user?.username,
+                created_at: new Date(posts[0]?.user?.created_at).toLocaleString().split(', ')[0],
+                bio: posts[0]?.user?.bio,
+                location: posts[0]?.user?.location,
+                birthday: posts[0]?.user?.birthday
             });
 
         })

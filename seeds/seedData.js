@@ -3,6 +3,7 @@ const seedData = {
   users: [
     { username: 'johnathan', password: 'password123' },
     { username: 'jane', password: 'password456' },
+    { username: 'cadence', password: 'pass', bio: "this is a test bio!", birthday: "04/08/2001", location: "Houston, Texas" }
   ],
   posts: [
     {

@@ -1,10 +1,55 @@
-{{>mainHeader}}
+{{> mainHeader }}
 
+<div class="h-[90%] flex items-center flex-col pt-4 overflow-auto">
+  <div
+    class="w-[40%] flex justify-center items-center bg-white border border-vibes-light-green rounded-md shadow-2xl flex-col pt-2 px-7 pb-4 gap-4">
+    <div id="usname" class="text-2xl underline underline-offset-2 text-vibes-medium-green">
+      {{{username}}}
+    </div>
+    <div id="biography">
+      {{{bio}}}
+    </div>
+    <div class="flex gap-4">
+      <div id="loc">
+        <i class="fa-solid fa-location-dot pr-2 text-vibes-dark-green"></i>{{{location}}}
+      </div>
+      <div id="bday">
+        <i class="fa-solid fa-cake-candles pr-2 text-vibes-dark-green"></i>{{{birthday}}}
+      </div>
+      <div id="accountCreation">
+        <i class="fa-solid fa-calendar-days pr-2 text-vibes-dark-green"></i>Joined {{{created_at}}}
+      </div>
+    </div>
 
-{{{username}}}
-{{{created_at}}}
+  </div>
 
-<div>
+  <div id="posts-container" class="flex flex-col mt-4 w-1/2 items-center gap-2 shadow-lg">
+    {{#each posts as |post|}}
+    <div class="bg-white shadow-md p-6 border border-1 border-vibes-medium-green w-full rounded-md">
+      <div id="postAuthor" class="text-blue-600 italic cursor-pointer hover:text-blue-500">
+        @{{user.username}}
+      </div>
+      <div class="border-2 border-vibes-medium-green rounded-md p-3">
+        <div id="title" class="text-lg font-bold">
+          {{title}}
+        </div>
+        <div id="content">
+          {{content}}
+        </div>
+      </div>
+      <div class="flex justify-between items-center mt-1">
+        <div class="flex items-center w-1/2 gap-4">
+          <i class="fa-regular fa-heart cursor-pointer text-vibes-medium-green text-2xl"></i>
+          <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
+          <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
+        </div>
+        <div class="displayDateBox flex justify-end w-1/2">
+          {{createdAt}}
+        </div>
+      </div>
+    </div> 
+    {{/each}}
+  </div> 
+</div> 
 
-  {{{title}}}
-</div>
+  

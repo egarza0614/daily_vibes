@@ -14,7 +14,7 @@
         {{#each posts as |post|}}
         <div class="bg-white shadow-md p-6 border border-1 border-vibes-medium-green w-full rounded-md">
             <div id="postAuthor" class="text-blue-600 italic cursor-pointer hover:text-blue-500">
-                @{{post.user.dataValues.username}}
+                <a href="/profile/{{user.username}}"> @{{user.username}}</a>
             </div>
             <div class="border-2 border-vibes-medium-green rounded-md p-3">
                 <div id="title" class="text-lg font-bold">
@@ -27,15 +27,22 @@
             <div class="flex justify-between items-center mt-1">
                 <div class="flex items-center w-1/2 gap-4">
                     <i class="fa-regular fa-heart cursor-pointer text-vibes-medium-green text-2xl"></i>
-                    <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
-                    <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
+                    <button onclick="submitComment()">
+                        <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
+                        </button>
+                        <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
                 </div>
                 <div class="displayDateBox flex justify-end w-1/2">
                     {{created_at}}
                 </div>
+                {{!-- <input id="comment" data-postId="{{id}}" type="text" />
+                {{!-- <button onclick="submitComment()">submit</button> --}}
             </div>
+            {{#each post.comments as |comment|}}
+
+            {{/each}}
         </div>
         {{/each}}
-    </div>
+    </div> --}}
 </div>
 </div>
