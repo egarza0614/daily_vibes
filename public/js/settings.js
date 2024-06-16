@@ -87,6 +87,7 @@ function updatePassword() {
             const data = await sendPasswordUpdate(newPassword);
             alert(data.success);
             blurBox.remove();
+            clearModal();
         } catch (error) {
             alert(error.message);
         }
