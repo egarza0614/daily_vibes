@@ -19,7 +19,10 @@ app.use(session({
   cookie: {
     secure: 'auto',
     expires: new Date(Date.now() + hour)
-  }
+  },
+  store: new SequelizeStore({
+    db: sequelize,
+  }),
 }))
 
 // Handlebars Setup
