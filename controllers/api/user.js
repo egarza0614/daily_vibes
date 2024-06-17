@@ -87,10 +87,6 @@ router.post('/signup', (req, res) => {
 
 // password update
 router.put('/updatePassword', async (req, res) => {
-    console.log("Received PUT request to /users/updatePassword");
-    console.log("Request Body:", req.body);
-    console.log("User ID from session:", req.session.user_id); // Check if user_id is available
-
     try {
         const { newPassword } = req.body; // Get the new password from the request body
         const userId = req.session.user_id;

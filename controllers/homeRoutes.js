@@ -4,11 +4,11 @@ const { Posts, Users, Comments } = require('../models');
 
 
 router.get('/signup', function (req, res, next) {
-    res.render('signup.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
+    res.render('signup.handlebars', { name: 'dailyvibes' });
 });
 
 router.get('/login', function (req, res, next) {
-    res.render('login.handlebars', { name: 'dailyvibes', email: 'cass@gmail.com' });
+    res.render('login.handlebars', { name: 'dailyvibes' });
 });
 
 router.get('/', function (req, res, next) {
