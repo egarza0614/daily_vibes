@@ -5,7 +5,7 @@ const { Comments } = require('../../models');
 // const { Posts } = require('../../models')
 
 // GET all comments for a specific post
-router.get('/:postId/comment', async (req, res, next) => { 
+router.get('/:postId', async (req, res, next) => {
   try {
     const postId = req.params.postId;
 
@@ -37,17 +37,18 @@ router.get('/:id', async (req, res) => {
 router.post('/:postId', async (req, res) => {
   console.log('COMMENTS')
   try {
-    const { comment_text } = req.body;
-    const postId = req.params.postId;
-    const userId = req.session.user_id;
+    const { comment } = req.body;
 
-    const comment = await Comments.create({
-      comment_text: comment_text,
-      user_id: userId,
-      post_id: postId,
+    const createComment = await Comments.create({
+      comment_text: comment,
+      user_id: req.session.user_id,
+      post_id: req.params.postId,
+      where: {
+        user_id: req.session.user_id
+      }
     });
 
-    res.status(201).json(comment);
+    res.status(201).json(createComment);
   } catch (err) {
     console.error(err);
     res.status(400).json({ message: 'Could not create comment' });
