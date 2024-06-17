@@ -650,6 +650,10 @@ video {
   height: 100vh;
 }
 
+.h-\[450px\] {
+  height: 450px;
+}
+
 .w-1\/2 {
   width: 50%;
 }
