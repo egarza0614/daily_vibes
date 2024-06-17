@@ -318,5 +318,4 @@ async function updateUser(type) {
         alertDiv.appendChild(error)
         return
     }
-    clearModal()
 }
