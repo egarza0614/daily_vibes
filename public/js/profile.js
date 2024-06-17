@@ -8,7 +8,3 @@ async function getUsersProfile() {
     }
     )
 }
-
-
-  
-

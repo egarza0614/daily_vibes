@@ -30,17 +30,18 @@ router.get('/posts', async function (req, res, next) {
         return p.get({ plain: true })
     })
     for (const post of posts) {
-       let comments = await Comments.findAll({
-           where: { post_id: post.id },
-           attributes: ['user_id', 'post_id', 'comment_text'],
+        let comments = await Comments.findAll({
+            where: { post_id: post.id },
+            attributes: ['user_id', 'post_id', 'comment_text'],
         })
         comments = comments.map((c => c.get({ plain: true })))
         post.comments = comments
     }
-    
-    res.render('posts.handlebars', { posts, username: req.session?.user?.username,
-        
-     })
+
+    res.render('posts.handlebars', {
+        posts, username: req.session?.user?.username,
+
+    })
 });
 
 
