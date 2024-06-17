@@ -10,6 +10,7 @@ const PORT = process.env.PORT || 3002;
 // Sequelize Store
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
+const {Session} = require('./models'); // Import your session model
 
 const hour = 360000
 app.use(session({
@@ -22,6 +23,7 @@ app.use(session({
   },
   store: new SequelizeStore({
     db: sequelize,
+    model: Session
   }),
 }))
 
@@ -38,7 +40,6 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-//app.use(express.static(__dirname + 'public'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 const filterBadWords = require('./middleware/badwords');
