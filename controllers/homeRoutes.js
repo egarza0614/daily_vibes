@@ -40,19 +40,28 @@ router.get('/posts', async function (req, res, next) {
 
     res.render('posts.handlebars', {
         posts, username: req.session?.user?.username,
-
-    })
+        mainHeader: {
+            username: req.session.user ? req.session.user.username : null
+        }
+    });
 });
 
 
 router.get('/settings', function (req, res, next) {
     if (!req.session.user_id) {
         res.render('login.handlebars', { title: 'hello' });
-        return
+        return;
     } else {
-        res.render('settings.handlebars', { title: 'Update Settings' })
+        console.log('Session User:', req.session.user); // Add this line
+        res.render('settings.handlebars', {
+            title: 'Update Settings',
+            username: req.session?.user?.username,
+            mainHeader: {
+                username: req.session.user ? req.session.user.username : null
+            }
+        });
     }
-})
+});
 
 router.get('/profile/:username', function (req, res, next) {
     const userPosts = Posts.findAll({
