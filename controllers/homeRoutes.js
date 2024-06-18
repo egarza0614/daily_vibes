@@ -37,7 +37,12 @@ router.get('/posts', async function (req, res, next) {
         comments = comments.map((c => c.get({ plain: true })))
         post.comments = comments
     }
-
+    // Log the username (if available) to the console
+    if (req.session && req.session.user && req.session.user.username) {
+        console.log('Logged-in User:', req.session.user.username);
+    } else {
+        console.log('User is not logged in.');
+    }
     res.render('posts.handlebars', {
         posts, username: req.session?.user?.username,
         mainHeader: {
