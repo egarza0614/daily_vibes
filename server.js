@@ -12,7 +12,7 @@ const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const sequelize = require('./config/connection');
 const {Session} = require('./models'); // Import your session model
 
-const hour = 360000
+const hour = 3600000
 app.use(session({
   secret: 'my secret',
   resave: false,
