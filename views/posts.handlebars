@@ -1,16 +1,15 @@
 {{>mainHeader username=username}}
-<div class="h-[90%] flex items-center flex-col pt-4 overflow-auto">
-    <div
-        class="w-[30%] flex justify-center items-center bg-white border border-vibes-light-green rounded-md shadow-2xl flex-col pt-2 px-7 pb-4">
-        <input type="text" id="userTitle" placeholder="Whats the vibe?"
+<div class="min-h-screen flex items-center flex-col pt-4 overflow-auto">
+    <div class="w-full md:w-[30%] bg-white border border-vibes-light-green rounded-md shadow-2xl flex flex-col pt-2 px-7 pb-4 mb-4 md:mb-0">
+        <input type="text" id="userTitle" placeholder="What's the vibe?"
             class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100">
         <input type="text" id="userInput" placeholder="Spill the tea"
             class="mt-1 p-2 block w-full border border-vibes-light-green rounded-md bg-gray-100 pb-14">
         <button id="post-button"
-            class="px-4 py-2 mt-3 border bg-vibes-light-green rounded-md w-1/4 text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green"
+            class="px-4 py-2 mt-3 border bg-vibes-light-green rounded-md w-full md:w-1/4 text-white hover:bg-vibes-medium-green focus:bg-vibes-dark-green"
             onclick="createPost()">Post</button>
     </div>
-    <div id="posts-container" class="flex flex-col mt-4 w-1/2 items-center gap-2 shadow-lg">
+    <div id="posts-container" class="flex flex-col w-full md:w-1/2 items-center gap-2 shadow-lg overflow-auto">
         {{#each posts as |post|}}
         <div class="bg-white shadow-md p-6 border border-1 border-vibes-medium-green w-full rounded-md">
             <div id="postAuthor" class="text-blue-600 italic cursor-pointer hover:text-blue-500">
@@ -23,51 +22,26 @@
                 <div id="content">
                     {{content}}
                 </div>
-                
             </div>
             <div class="flex justify-between items-center mt-1">
                 <div class="flex items-center w-1/2 gap-4">
                     <i class="fa-regular fa-heart cursor-pointer text-vibes-medium-green text-2xl"></i>
                     <button onclick="submitComment()">
                         <i class="fa-regular fa-comment cursor-pointer text-vibes-medium-green text-2xl"></i>
-                        </button>
-                        <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
+                    </button>
+                    <i class="fa-regular fa-share-from-square text-vibes-medium-green text-2xl"></i>
                 </div>
                 <div class="displayDateBox flex justify-end w-1/2">
                     {{created_at}}
                 </div>
                 <input id="comment" data-postId="{{id}}" type="text" />
-                {{!-- <button onclick="submitComment()">submit</button> --}}
             </div>
             {{#each post.comments as |comment|}}
-
+            <!-- Display comments here -->
             {{/each}}
         </div>
         {{/each}}
-    </div> 
+    </div>
 </div>
-</div>
+
  
-
-{{!-- 
-
-   <div class="mt-2">
-        {{#each post.comments as |comment|}}
-        <div class="bg-white shadow-md border border-1 border-vibes-medium-green rounded-md p-2 mt-2">
-            {{#each post.comments as |comment|}}
-            <div class="text-blue-600 italic">
-                @{{comment.username}}
-            </div>
-            <div class="text-gray-700">
-                {{comment.content}}
-            </div>
-        </div>
-        {{/each}}
-
-        <div class="mt-2">
-            <input id="comment" data-postId="{{id}}" type="text"
-                class="border-2 border-vibes-medium-green rounded-md p-2 w-full" placeholder="Add a comment..." />
-            <button onclick="submitComment()"
-                class="bg-vibes-medium-green text-white px-3 py-1 rounded-md ml-2">Submit</button>
-        </div>
-    </div> --}}
