@@ -2,8 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { Posts } = require('../../models');
 
-
-
 router.get('/', (req, res) => {
   console.log("POOOOOOOOOST!")
   console.log(req.session.user_id)
@@ -61,7 +59,6 @@ router.post('/', (req, res) => {
       })
     })
 })
-
 
 router.delete('/:id', (req, res) => {
   Posts.destroy({

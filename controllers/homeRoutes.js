@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { Posts, Users, Comments } = require('../models');
+const withAuth = require('../middleware/authMiddleware'); // Import the middleware
 
 
 router.get('/signup', function (req, res, next) {
@@ -15,7 +16,6 @@ router.get('/', function (req, res, next) {
     res.render('login.handlebars', { title: 'hello' });
 });
 
-
 router.get('/posts', async function (req, res, next) {
     console.log("GETTING POSTS")
     let posts = await Posts.findAll({
@@ -25,7 +25,6 @@ router.get('/posts', async function (req, res, next) {
             model: Users
         }]
     })
-    console.log('first LOG----------------------')
     posts = posts.map(p => {
         return p.get({ plain: true })
     })
@@ -51,8 +50,7 @@ router.get('/posts', async function (req, res, next) {
     });
 });
 
-
-router.get('/settings', function (req, res, next) {
+router.get('/settings', withAuth, (req, res, next) => {
     if (!req.session.user_id) {
         res.render('login.handlebars', { title: 'hello' });
         return;

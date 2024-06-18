@@ -12,11 +12,12 @@ async function handleLogin() {
       },
       body: JSON.stringify(formData)
     });
-    const json = await response.json();
 
     if (response.ok) { // Check if the response was successful
+      const json = await response.json();
       window.location.href = '/posts';
     } else {
+      const json = await response.json();
       // Display a user-friendly error message based on the server response
       const errorMessage = json.message || "An error occurred during login.";
       const errorElement = document.getElementById('loginError'); // Get the error message element
@@ -63,17 +64,26 @@ const handleSignUp = async (event) => {
         alert(errorMessage); // Fallback to an alert
       }
     } else {
-      const errorMessage = `Signup failed with status: ${response.status} ${response.statusText}`;
-      alert(errorMessage); // Display an error message
+     // Attempt to parse JSON for a potentially more detailed error message
+     try {
+        const errorData = await response.json();
+        const errorMessage = errorData.error || `Signup failed with status: ${response.status} ${response.statusText}`;
+        alert(errorMessage);
+      } catch (parseError) {
+        // If parsing fails, display a generic error message
+        alert("Signup failed. Please try again.");
+      }
     }
+
   } catch (error) {
     console.error(error);
     alert("An unexpected error occurred during signup."); // Generic error message for network/fetch issues
   }
 };
+
 function clearAlert() {
   matchAlertBox.innerHTML = null
-};
+}
 
 function checkPasswordMatch(formData) {
   const confirmPassword = document.getElementById('confirmPassword').value
@@ -88,27 +98,35 @@ function checkPasswordMatch(formData) {
   return
 };
 
-async function createPost() {
-  try {
-    const title = document.getElementById('userTitle').value;
-    const content = document.getElementById('userInput').value;
+// Inside script.js
 
-    const response = await fetch('/api/posts/', {
+async function createPost() {
+  const title = document.getElementById('userTitle').value.trim();
+  const content = document.getElementById('userInput').value.trim();
+
+  if (!title || !content) {
+    alert('Please fill in both title and content fields.');
+    return;
+  }
+
+  try {
+    const response = await fetch('/api/posts', {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ title, content })
+      body: JSON.stringify({ title, content }),
+      headers: { 'Content-Type': 'application/json' }
     });
-    console.log("response", response)
-    // Redirect to the newly created post's page
-    window.location.href = `/`;
-    if (!response.ok) {
-      console.error('Failed to create post');
+
+    if (response.ok) {
+      // Post created successfully, reload the page
+      window.location.reload(); // Refresh the page to get the updated posts
+    } else {
+      // Handle errors (display error message from backend)
+      const errorData = await response.json();
+      alert(errorData.error || 'Failed to create post.');
     }
   } catch (error) {
-    console.error(error);
+    console.error('Error creating post:', error);
+    alert('Failed to create post. Please try again.');
   }
-  window.location.reload()
-  // temp fix to re-rendering
-};
+}
+

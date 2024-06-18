@@ -1,43 +1,49 @@
 const router = require('express').Router()
 const { Users } = require('../../models')
 const { Posts } = require('../../models');
+const bcrypt = require('bcrypt');
 
 // find all users
-router.get('/', (req, res) => {
-    Users.findAll({
-        attributes: ['id', 'username', 'email', 'password', 'created_at']
-    })
-        .then((result) => {
-            return res.status(200).json(result)
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.json({
-                message: 'Cannot fetch users!'
-            })
-        })
-})
+router.get('/', async (req, res) => {
+    try {
+      const users = await Users.findAll({
+        attributes: ['id', 'username', 'created_at'], // Removed 'email' and 'password'
+      });
+      res.status(200).json(users);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        error: 'Cannot fetch users!',
+        details: err.message,
+      });
+    }
+  });
 
-router.get('/:username/posts', (req, res) => {
-    Posts.findAll({
-        include: [{
+// find users posts
+router.get('/:username/posts', async (req, res) => {
+    try {
+      const posts = await Posts.findAll({
+        include: [
+          {
             model: Users,
             where: {
-                username: req.params.username
+              username: req.params.username,
             },
-            attributes: ['id', 'username']
-        }]
-    })
-        .then((result) => {
-            console.log(result)
-            return res.status(200).json(result)
-        })
-        .catch((err) => {
-            console.error(err)
-            return res.status(400).json({ message: 'Could not fetch posts' })
-        }
-        )
-})
+            attributes: ['id', 'username'],
+          },
+        ],
+      });
+  
+      if (posts.length === 0) {
+        return res.status(404).json({ message: "No posts found for this user" });
+      }
+    
+      return res.status(200).json(posts);
+    } catch (err) {
+      console.error(err);
+      return res.status(500).json({ error: 'Could not fetch posts', details: err.message });
+    }
+  });
 // find user by username
 router.get('/:username', (req, res) => {
     Users.findAll({
@@ -102,38 +108,41 @@ router.post('/signup', async (req, res) => {
     }
 });
 
-// password update
+// update password
 router.put('/updatePassword', async (req, res) => {
     try {
         const { currentPassword, newPassword } = req.body; 
         const userId = req.session.user_id;
 
-        const user = await Users.findByPk(userId);
+        try {
+            const user = await Users.findByPk(userId);
+            if (!user) {
+                return res.status(404).json({ error: "User not found." });
+            }
 
-        if (!user) {
-            return res.status(404).json({ error: "User not found." });
+            // Compare the current password (hashed in database)
+            const validPassword = await bcrypt.compare(currentPassword, user.password); 
+            if (!validPassword) {
+                return res.status(401).json({ error: "Incorrect current password." }); 
+            }
+
+            // Hash the new password
+            const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds (or adjust)
+            await user.update({ password: hashedPassword }); // Update the password in the database
+            return res.status(200).json({ success: "Password updated successfully!" });
+
+        } catch (dbError) {
+            console.error('Database error:', dbError);
+            return res.status(500).json({ error: 'An error occurred while fetching user data.' });
         }
 
-        // Compare the current password (hashed in database)
-        const validPassword = await bcrypt.compare(currentPassword, user.password); 
-        if (!validPassword) {
-            return res.status(401).json({ error: "Incorrect current password." }); 
-        }
-
-        // Hash the new password
-        const hashedPassword = await bcrypt.hash(newPassword, 10); // 10 salt rounds (or adjust)
-
-        // Update the password in the database
-        await user.update({ password: hashedPassword });
-
-        return res.status(200).json({ success: "Password updated successfully!" });
     } catch (err) {
         console.error('Error updating password:', err); 
         return res.status(500).json({ error: "Unable to update password." });
     }
 });
 
-// bio, location, birthday update
+// update bio, location, birthday
 router.put('/', (req, res) => {
     const { bio, location, birthday } = req.body;
     Users.update({
