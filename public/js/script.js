@@ -5,26 +5,32 @@ async function handleLogin() {
     password: document.getElementById('password').value
   };
   try {
-    await fetch('/api/authentication/login', {
+    const response = await fetch('/api/authentication/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(formData)
-    })
-      .then(async (res) => {
-        console.log(res)
-        const json = await res.json()
-        if (json.success) {
-          window.location.href = '/posts'
-        }
-      })
-  } catch (e) {
-    console.error(e);
+    });
+    const json = await response.json();
+
+    if (response.ok) { // Check if the response was successful
+      window.location.href = '/posts';
+    } else {
+      // Display a user-friendly error message based on the server response
+      const errorMessage = json.message || "An error occurred during login.";
+      const errorElement = document.getElementById('loginError'); // Get the error message element
+      if (errorElement) {
+        errorElement.textContent = errorMessage; // Show the error message in the UI
+      } else {
+        alert(errorMessage); // Fallback to an alert if the error element is not found
+      }
+    }
+  } catch (error) {
+    console.error(error);
+    alert("An error occurred during login."); // Generic error message for network/fetch issues
   }
 };
-
-const matchAlertBox = document.getElementById('matchAlertBox')
 
 const handleSignUp = async (event) => {
   const formData = {
@@ -32,31 +38,46 @@ const handleSignUp = async (event) => {
     password: document.getElementById('password').value,
     confirmPassword: document.getElementById('confirmPassword').value
   };
-  const response = await fetch('/api/users/signup', {
-    method: "POST",
-    body: JSON.stringify(formData),
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  })
-  console.log(response)
   checkPasswordMatch(formData)
-  if (!response.ok) {
-    return
-  } else {
-    const success = confirm('Account Created!')
-    if (success === true) {
-      window.location.replace('/');
+  try {
+    const response = await fetch('/api/users/signup', {
+      method: "POST",
+      body: JSON.stringify(formData),
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    });
+
+    if (response.ok) {
+      const json = await response.json();
+      if (json.success) {
+        window.location.replace('/');
+        return;
+      }
+      // Handle validation errors or other errors
+      const errorMessage = json.error || "An error occurred during signup.";
+      const errorElement = document.getElementById('signupError'); // Get the error message element
+      if (errorElement) {
+        errorElement.textContent = errorMessage; // Show the error message in the UI
+      } else {
+        alert(errorMessage); // Fallback to an alert
+      }
+    } else {
+      const errorMessage = `Signup failed with status: ${response.status} ${response.statusText}`;
+      alert(errorMessage); // Display an error message
     }
+  } catch (error) {
+    console.error(error);
+    alert("An unexpected error occurred during signup."); // Generic error message for network/fetch issues
   }
 };
-
 function clearAlert() {
   matchAlertBox.innerHTML = null
 };
 
 function checkPasswordMatch(formData) {
   const confirmPassword = document.getElementById('confirmPassword').value
+  const matchAlertBox = document.getElementById('matchAlertBox')
   matchAlertBox.innerHTML = null
   if (confirmPassword !== formData.password) {
     const matchAlert = document.createElement('p')

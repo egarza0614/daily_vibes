@@ -83,6 +83,7 @@ router.get('/profile/:username', function (req, res, next) {
             console.log(posts)
             res.render('profile.handlebars', {
                 posts,
+                hasPosts: posts.length > 0, // Add a flag to indicate if the user has posts
                 username: posts[0]?.user?.username,
                 created_at: new Date(posts[0]?.user?.created_at).toLocaleString().split(', ')[0],
                 bio: posts[0]?.user?.bio,
